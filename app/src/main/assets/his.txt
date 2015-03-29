@@ -1,0 +1,255 @@
+
+<div id="header_opac">
+	<h1 class="header_opac_img">
+    <div class="header_opac_logo">
+    	山东大学（威海）图书馆书目检索系统<br>
+        <p>Online Public Access Catalogue</p>
+
+    </div>
+    </h1>
+    <div class="header_right header_right_top">
+      <p class="header_right_font">       </p>
+      <p class="header_right_font" style="margin-top: 60px;">
+        <a href="../opac/book_cart.php">暂存书架(<span id="bookcartCount">0</span>)</a> | <font color="blue">王宏宇</font> <strong><a style="color: rgb(255, 0, 0);" href="../reader/logout.php">注销</a></strong></p>
+       </div>
+</div>
+<div id="menubar">
+    <ul id="menu_top">
+    		  	<li><a href="../opac/search.php" target="_self">书目检索</a></li>
+	  		  	<li><a href="../top/top_lend.php" target="_self">热门推荐</a></li>
+	  		  	<li><a href="../browse/cls_browsing.php" target="_self">分类浏览</a></li>
+	  		  	<li><a href="../newbook/newbook_cls_browse.php" target="_self">新书通报</a></li>
+	  		  	<li><a href="../peri/peri_nav_e.php" target="_self">期刊导航</a></li>
+	  		  	<li><a href="../asord/asord_hist.php" target="_self">读者荐购</a></li>
+	  		  	<li><a href="../shelf/curriculum.php" target="_self">学科参考</a></li>
+	  		  	<li><a href="../info/info_guide.php" target="_self">信息发布</a></li>
+	  		  	<li><a class="menu_top_on" style="color: rgb(108, 91, 35);" href="../reader/redr_info.php" target="_self">我的图书馆</a></li>
+	  		  	         <div class="clear"></div>
+    </ul>
+</div>
+<div id="submenu">
+	        <div class="clear"></div>
+</div>
+
+  		<div id="mainbox">
+   <div id="container">
+  <div id="navsidebar">
+     <ul id="nav_mylib">
+     	<li><a href="redr_info.php">证件信息</a></li><li><a href="book_lst.php">当前借阅</a></li><li id="nav_mylibhome"><a href="book_hist.php">借阅历史</a></li><li><a href="asord_lst.php">荐购历史</a></li><li><a href="preg.php">预约信息</a></li><li><a href="relegate.php">委托信息</a></li><li><a href="book_shelf.php">我的书架</a></li><li><a href="book_loss.php">书刊遗失</a></li><li><a href="redr_lost.php">读者挂失</a></li><li><a href="account.php">帐目清单</a></li><li><a href="fine_pec.php">违章缴款</a></li><li><a href="book_rv.php">我的书评</a></li><li><a href="search_hist.php">检索历史</a></li><li><a href="redr_cust_result.php">我的定制</a></li>
+     </ul>
+  </div>
+
+  <div id="mylib_content">
+  		<h2>借阅历史</h2>
+
+      <form name="frm_hist" id="f" action="" method="post">
+      	<p style="margin: 10px auto;"><input name="para_string" onclick="frm_hist.submit();" type="radio" value="all">显示全部
+			<input name="para_string" onclick="frm_hist.submit();" type="radio" checked="" value="page">分页显示
+       		&nbsp;&nbsp;&nbsp; 上一页 <b><font color="red">1</font> / <font color="black">9</font></b> &nbsp;<a class="blue" href="/reader/book_hist.php?page=2">下一页</a> 到第 <select name="topage" onchange='window.location="/reader/book_hist.php?page="+this.value' size="1">
+<option value="1" selected="">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+<option value="6">6</option>
+<option value="7">7</option>
+<option value="8">8</option>
+<option value="9">9</option>
+</select>页</p>
+     </form>
+			<table width="100%" class="table_line" bgcolor="#cccccc" border="0" cellspacing="1" cellpadding="5">
+				<tbody><tr>
+					<td class="greytext" bgcolor="#d8d8d8"></td>
+					<td class="greytext" bgcolor="#d8d8d8">条码号</td>
+					<td class="greytext" bgcolor="#d8d8d8">题名</td>
+					<td class="greytext" bgcolor="#d8d8d8">责任者</td>
+					<td class="greytext" bgcolor="#d8d8d8">借阅日期</td>
+					<td class="greytext" bgcolor="#d8d8d8">归还日期</td>
+					<td class="greytext" bgcolor="#d8d8d8">馆藏地</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">1</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0945776</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000479541">新编计算机英语</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">王春生, 刘艺, 杨伟荣编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-05</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-15</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">语言文字类图书(10楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">2</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0221023</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000007839">编译原理</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">吕映芝,张素琴,蒋维杜编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-05</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-15</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">密集书库(1楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">3</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0929558</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000460598">编译原理</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">蒋宗礼, 姜守旭编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-02</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-11</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">4</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0413678</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000133500">网络安全:公众世界中的秘密通信:private communication in a public world</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">(美) Charlie Kaufman, Radia Perlman, Mike Speciner著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-02</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-11</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">密集书库(1楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">5</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1204543</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000612102">Learning PHP设计模式</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">William Sanders著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-01-12</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-03-16</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">6</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1038562</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000523690">职场急诊室:谁没一点病</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">刘同著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-01-10</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">人文社科类图书(3楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">7</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0833004</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000390176">男人来自火星 女人来自金星.第2版</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">(美) 约翰·格雷著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-01-10</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">人文社科类图书(3楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">8</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1184402</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000620762">聪明女生像男生那样思考</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">依莎贝编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-25</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">人文社科类图书(3楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">9</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0972301</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000478819">这也能想到:巧妙解答无厘头问题:solving the world's problems on the back of a cocktail napkin</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">(美)Lawrence Weinstein, John A. Adam著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-25</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">人文社科类图书(3楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">10</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1133963</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000582008">超级思考力</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">毕春月编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-25</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">人文社科类图书(3楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">11</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0981501</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000486331">JSP项目开发案例全程实录.第2版</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">卢翰, 王国辉等编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-13</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">12</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0781317</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000364554">精通JSP:Web开发技术与典型应用</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">张新曼编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-13</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">13</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1064731</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000541224">Android进阶实践</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">蔺华, 时允田著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-11-27</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">14</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1079078</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000535706">Android 4.0网络编程详解</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">王家林著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-11-27</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">15</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1012105</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000498156">使用HTML、CSS和JavaScript开发Android程序</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">(美) Jonathan Stark著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-11-27</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">16</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1099085</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000551374">jQuery Mobile即学即用</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">(阿根廷) Maximiliano Firtman著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-11-27</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2015-02-28</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">17</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1101109</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000558523">Head First jQuery:中文版</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">Ryan Benedetti, Ronan Cranley著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-10-26</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-11-25</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">18</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS0954497</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000437726">Head First Servlets and JSP</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">Bryan Basham, Kathy Sierra, Bert Bates著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-10-26</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-11-27</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">电子及计算机技术类图书(7楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">19</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1117086</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000543164">再冷门的问题也有最热闹的答案</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">科学松鼠会和它的朋友们著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-10-20</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-15</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">自然科学类图书(5楼)</td>
+				</tr>
+				<tr>
+					<td width="5%" class="whitetext" bgcolor="#ffffff">20</td>
+					<td width="10%" class="whitetext" bgcolor="#ffffff">TS1178116</td>
+					<td width="25%" class="whitetext" bgcolor="#ffffff"><a class="blue" href="../opac/item.php?marc_no=0000610309">365夜科普</a></td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">贺锡廉, 王义炯, 王福康编著</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-10-20</td>
+					<td width="12%" class="whitetext" bgcolor="#ffffff">2014-12-15</td>
+					<td width="15%" class="whitetext" bgcolor="#ffffff">自然科学类图书(5楼)</td>
+				</tr>
+			</tbody></table>
+  </div>
+
+  <div class="clear"></div>
+
+</div><div id="footer"><div id="copy"><p> 山东大学（威海）图书馆&nbsp;&nbsp; OPAC v5.0.1.0113  &nbsp;&nbsp;</p><p>© 1999-2013 <a href="http://www.libsys.com.cn" target="_blank">Jiangsu Huiwen Software Ltd. 江苏汇文软件有限公司</a></p></div></div></div>

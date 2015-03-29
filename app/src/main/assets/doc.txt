@@ -1,0 +1,68 @@
+
+<div id="header_opac">
+	<h1 class="header_opac_img">
+    <div class="header_opac_logo">
+    	山东大学（威海）图书馆书目检索系统<br>
+        <p>Online Public Access Catalogue</p>
+
+    </div>
+    </h1>
+    <div class="header_right header_right_top">
+      <p class="header_right_font">       </p>
+      <p class="header_right_font" style="margin-top: 60px;">
+        <a href="../opac/book_cart.php">暂存书架(<span id="bookcartCount">0</span>)</a> | <font color="blue">王宏宇</font> <strong><a style="color: rgb(255, 0, 0);" href="../reader/logout.php">注销</a></strong></p>
+       </div>
+</div>
+<div id="menubar">
+    <ul id="menu_top">
+    		  	<li><a href="../opac/search.php" target="_self">书目检索</a></li>
+	  		  	<li><a href="../top/top_lend.php" target="_self">热门推荐</a></li>
+	  		  	<li><a href="../browse/cls_browsing.php" target="_self">分类浏览</a></li>
+	  		  	<li><a href="../newbook/newbook_cls_browse.php" target="_self">新书通报</a></li>
+	  		  	<li><a href="../peri/peri_nav_e.php" target="_self">期刊导航</a></li>
+	  		  	<li><a href="../asord/asord_hist.php" target="_self">读者荐购</a></li>
+	  		  	<li><a href="../shelf/curriculum.php" target="_self">学科参考</a></li>
+	  		  	<li><a href="../info/info_guide.php" target="_self">信息发布</a></li>
+	  		  	<li><a class="menu_top_on" style="color: rgb(108, 91, 35);" href="../reader/redr_info.php" target="_self">我的图书馆</a></li>
+	  		  	         <div class="clear"></div>
+    </ul>
+</div>
+<div id="submenu">
+	        <div class="clear"></div>
+</div>
+
+  		<div id="mainbox">
+   <div id="container">
+  <div id="navsidebar">
+     <ul id="nav_mylib">
+     	<li><a href="redr_info.php">证件信息</a></li><li><a href="book_lst.php">当前借阅</a></li><li><a href="book_hist.php">借阅历史</a></li><li><a href="asord_lst.php">荐购历史</a></li><li><a href="preg.php">预约信息</a></li><li><a href="relegate.php">委托信息</a></li><li><a href="book_shelf.php">我的书架</a></li><li><a href="book_loss.php">书刊遗失</a></li><li><a href="redr_lost.php">读者挂失</a></li><li><a href="account.php">帐目清单</a></li><li><a href="fine_pec.php">违章缴款</a></li><li id="nav_mylibhome"><a href="book_rv.php">我的书评</a></li><li><a href="search_hist.php">检索历史</a></li><li><a href="redr_cust_result.php">我的定制</a></li>
+     </ul>
+  </div>
+
+  <div id="mylib_content">
+  <h2>我的书评</h2><br>
+
+
+	<div id="comment">
+
+				<div class="attitude">
+				<div style="color: rgb(156, 156, 156); margin-bottom: 20px;"><p><a class="blue" href="../opac/item.php?marc_no=0000032469">1.&nbsp;围城.第2版</a> 钱钟书著</p>
+				<p class="comment_line" style="padding: 10px; font-size: 14px;">众生百态</p>
+				 <p style="margin: 5px auto;"><img width="16" height="16" src="../tpl/images/good.gif">(1)&nbsp;<img width="16" height="16" src="../tpl/images/bad.gif">(0) &nbsp;&nbsp;
+	        	  <span style="color: rgb(102, 102, 102);">发表于 </span>2014-11-30 20:43:08</p>
+                        </div>
+	  </div>
+
+				<div class="attitude">
+				<div style="color: rgb(156, 156, 156); margin-bottom: 20px;"><p><a class="blue" href="../opac/item.php?marc_no=0000554266">2.&nbsp;围城</a> 钱钟书著</p>
+				<p class="comment_line" style="padding: 10px; font-size: 14px;">婚姻就是一座围城，里面的人想出来。外面的人想进去</p>
+				 <p style="margin: 5px auto;"><img width="16" height="16" src="../tpl/images/good.gif">(4)&nbsp;<img width="16" height="16" src="../tpl/images/bad.gif">(1) &nbsp;&nbsp;
+	        	  <span style="color: rgb(102, 102, 102);">发表于 </span>2014-07-23 18:20:45</p>
+                        </div>
+	  </div>
+			<div class="numstyle"></div>
+	</div>
+	  </div>
+  <div class="clear"></div>
+
+</div><div id="footer"><div id="copy"><p> 山东大学（威海）图书馆&nbsp;&nbsp; OPAC v5.0.1.0113  &nbsp;&nbsp;</p><p>© 1999-2013 <a href="http://www.libsys.com.cn" target="_blank">Jiangsu Huiwen Software Ltd. 江苏汇文软件有限公司</a></p></div></div></div>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ibook</string>
+    <string name="action_settings">Settings</string>
+
+    <string-array name="search_books_type">
+        <item>题名</item>
+        <item>责任者</item>
+        <item>主题词</item>
+        <item>ISBN/ISSN</item>
+        <item>订购号</item>
+        <item>分类号</item>
+        <item>索书号</item>
+        <item>出版社</item>
+        <item>丛书名</item>
+        <item>题名拼音</item>
+        <item>责任者拼音</item>
+    </string-array>
+    <string-array name="search_books_func">
+        <item>前方一致</item>
+        <item>完全匹配</item>
+        <item>任意匹配</item>
+    </string-array>
+
+    <string name="title_activity_login">Login</string>
+    <string name="action_user01">荐购历史</string>
+    <string name="action_user02">图书预约</string>
+    <string name="action_user03">荐购图书</string>
+    <string name="action_user04">图书委托</string>
+    <string name="tab_search">图书搜索</string>
+    <string name="tab_borrowNow">当前借阅</string>
+    <string name="tab_borrowHis">借阅历史</string>
+    <string name="tab_myDocument">我的书评</string>
+    <string name="title_activity_search_result">SearchResultActivity</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_loading">LoadingActivity</string>
+
+    <string name="captcha_hint">输入图片中的红色内容</string>
+
+    <string name="hot">热门检索</string>
+
+    <string name="loading">正在加载，请稍后...</string>
+</resources>

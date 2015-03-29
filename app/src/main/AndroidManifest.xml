@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.sdu.wh.ibook" >
+
+    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <application
+        android:name=".IBookApp"
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".ui.MainActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan|stateHidden" >
+        </activity>
+        <activity android:name=".ui.WelcomeActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.LoginActivity" >
+
+        </activity>
+        <activity android:name=".ui.UserActivity" >
+        </activity>
+        <activity android:name=".ui.SearchDetialActivity" >
+        </activity>
+        <activity android:name=".ui.NowDetialActivity" >
+        </activity>
+        <activity android:name=".ui.HisDetialActivity" >
+        </activity>
+        <activity
+            android:name=".ui.SearchResultActivity"
+            android:label="@string/title_activity_search_result" >
+        </activity>
+    </application>
+
+</manifest>

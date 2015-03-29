@@ -1,0 +1,164 @@
+<html><head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>山东大学（威海）图书馆v5.0书目检索系统 </title>
+    <link type="text/css" rel="stylesheet" href="../tpl/css/style.css">
+    <link type="text/css" rel="stylesheet" href="../tpl/css/mylib.css">
+    <link type="text/css" rel="stylesheet" href="../tpl/css/ui-lightness/jquery-ui-1.8.13.custom.css">
+    <script type="text/javascript" src="../tpl/js/jquery.1.7.1.min.js"></script>
+    <script type="text/javascript" src="../tpl/js/jquery-ui-1.8.13.custom.min.js"></script>
+    <script type="text/javascript" src="../tpl/js/highlighter.js"></script>
+</head>
+<body>
+<div id="header_opac">
+    <h1 class="header_opac_img">
+        <div class="header_opac_logo">
+            山东大学（威海）图书馆书目检索系统<br>
+            <p>Online Public Access Catalogue</p>
+
+        </div>
+    </h1>
+    <div class="header_right header_right_top">
+        <p class="header_right_font">       </p>
+        <p style="margin-top:60px;" class="header_right_font">
+            <a href="../opac/book_cart.php">暂存书架(<span id="bookcartCount">0</span>)</a> | <font color="blue">王宏宇</font> <strong><a href="../reader/logout.php" style="color:#ff0000;">注销</a></strong></p>
+    </div>
+</div>
+<div id="menubar">
+    <ul id="menu_top">
+        <li><a href="../opac/search.php" target="_self">书目检索</a></li>
+        <li><a href="../top/top_lend.php" target="_self">热门推荐</a></li>
+        <li><a href="../browse/cls_browsing.php" target="_self">分类浏览</a></li>
+        <li><a href="../newbook/newbook_cls_browse.php" target="_self">新书通报</a></li>
+        <li><a href="../peri/peri_nav_e.php" target="_self">期刊导航</a></li>
+        <li><a href="../asord/asord_hist.php" target="_self">读者荐购</a></li>
+        <li><a href="../shelf/curriculum.php" target="_self">学科参考</a></li>
+        <li><a href="../info/info_guide.php" target="_self">信息发布</a></li>
+        <li><a class="menu_top_on" style="color:#6C5B23;" href="../reader/redr_info.php" target="_self">我的图书馆</a></li>
+        <div class="clear"></div>
+    </ul>
+</div>
+<div id="submenu">
+    <div class="clear"></div>
+</div>
+
+
+
+
+<div id="mainbox">
+    <div id="container">
+        <div id="navsidebar">
+            <ul id="nav_mylib">
+                <li id="nav_mylibhome"><a href="redr_info.php">证件信息</a></li><li><a href="book_lst.php">当前借阅</a></li><li><a href="book_hist.php">借阅历史</a></li><li><a href="asord_lst.php">荐购历史</a></li><li><a href="preg.php">预约信息</a></li><li><a href="relegate.php">委托信息</a></li><li><a href="book_shelf.php">我的书架</a></li><li><a href="book_loss.php">书刊遗失</a></li><li><a href="redr_lost.php">读者挂失</a></li><li><a href="account.php">帐目清单</a></li><li><a href="fine_pec.php">违章缴款</a></li><li><a href="book_rv.php">我的书评</a></li><li><a href="search_hist.php">检索历史</a></li><li><a href="redr_cust_result.php">我的定制</a></li>
+            </ul>
+        </div>
+
+        <div id="mylib_content">
+            <h2>证件信息</h2><br><br>
+            <div class="mylib_msg">
+                <a href="book_lst.php">五天内即将过期图书[<strong style="color:#F00;">0</strong>]</a>，<a href="book_lst.php">已超期图书[<strong style="color:#F00;">0</strong>]</a>，<a href="preg.php">预约到书[<strong style="color:#F00;">0</strong>]</a>， <a href="relegate.php">委托到书[<strong style="color:#F00;">0</strong>]</a>
+                <br><br>
+                最近两个月您一共有<a href="asord_lst.php">【5】条荐购</a>，图书馆已处理了【5】条 ，点击<a href="../asord/asord_redr.php" class="btn btn-success" style="color:#fff;">继续荐购</a>	</div>
+            <div id="mylib_info">
+                <table style="padding:8px" border="0" cellpadding="5" cellspacing="1" width="100%">
+                    <tbody><tr>
+                        <td rowspan="6">
+                            <span style="padding-left:20px;"><img src="../tpl/images/libimg.png" border="0"></span><br>
+                            <input class="btn btn-success" value="修改密码" onclick="javascript:location.href='change_passwd.php'" type="button">
+                            <input class="btn btn-success" value="修改信息" onclick="javascript:location.href='change_email.php'" type="button">
+                        </td>
+                        <td><span class="bluetext">姓名：</span>王宏宇</td>
+                        <td><span class="bluetext">证件号： </span>201200800450</td>
+                        <td><span class="bluetext">条码号：</span>201200800450</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">失效日期：</span>2016-07-10</td>
+                        <td><span class="bluetext">办证日期：</span>2012-09-05</td>
+                        <td><span class="bluetext">生效日期：</span>2012-09-05</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">最大可借图书：</span>20</td>
+                        <td><span class="bluetext">最大可预约图书：</span>2</td>
+                        <td><span class="bluetext">最大可委托图书：</span>0</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">读者类型：</span>本、专科生</td>
+                        <td><span class="bluetext">借阅等级：</span>03</td>
+                        <td><span class="bluetext">累计借书：</span>246册次</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">违章次数：</span>0</td>
+                        <td><span class="bluetext">欠款金额：</span>0</td>
+                        <td><span class="bluetext">系别：</span></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2"><span class="bluetext">Email：</span>18369188711@163.com
+                            <font color="red">未验证</font>&nbsp;&nbsp;<a class="blue" href="email_con.php">点击验证</a>
+                        </td>
+                        <td colspan="2"><span class="bluetext">身份证号： </span></td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">工作单位：</span>机电与信息工程学院</td>
+                        <td><span class="bluetext">职业/职称：</span>学生 </td>
+                        <td><span class="bluetext">职位：</span></td>
+                        <td><span class="bluetext">性别：</span>女</td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">住址：</span></td>
+                        <td><span class="bluetext">邮编：</span></td>
+                        <td><span class="bluetext">电话：</span>18369188711</td>
+                        <td><span class="bluetext">手机：</span>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><span class="bluetext">出生日期：</span></td>
+                        <td><span class="bluetext">文化程度：</span></td>
+                        <td><span class="bluetext">押金：</span>0元</td>
+                        <td><span class="bluetext">手续费：</span>0元</td>
+                    </tr>
+                    </tbody></table>
+            </div>
+            <h2><span id="ruleSpan" title="点击展开详细规则信息" onclick="toggle()" style="height:66px;cursor:hand;">适用的借阅规则<img src="../tpl/images/arrow_down.gif"></span></h2>
+            <table style="display: none;" id="rule" class="table_line" bgcolor="#CCCCCC" border="0" cellpadding="5" cellspacing="1" width="100%">
+                <tbody><tr>
+                    <td class="greytext" width="125">规则名称</td>
+                    <td class="greytext" width="123">适用馆藏地</td>
+                    <td class="greytext" align="left" width="106">图书流通类型</td>
+                    <td class="greytext" align="center" width="78">最大借阅册数</td>
+                    <td class="greytext" align="center" width="31">借期</td>
+                    <td class="greytext" align="center" width="43">预约</td>
+                    <td class="greytext" align="center" width="43">续借</td>
+                    <td class="greytext" width="54"></td>
+                </tr>
+                <tr>
+                    <td class="whitetext" width="125">本、专科生借阅规则(可以预约)</td>
+                    <td class="whitetext" align="left" width="123">人文社科类图书(3楼),自然科学类图书(5楼),经济类图书(9楼),语言文字类图书(10楼),文学类图书(4楼),密集书库(1楼),电子及计算机技术类图书(7楼),艺术类图书(11楼),日韩文图书(12楼),西文图书(6楼),中、外文现刊阅览区(图东楼3,4楼),法律类图书(8楼)</td>
+                    <td class="whitetext" align="left" width="106">全部</td>
+                    <td class="whitetext" align="center" width="78">20</td>
+                    <td class="whitetext" align="center" width="31">30</td>
+                    <td class="whitetext" align="center" width="43">允许</td>
+                    <td class="whitetext" align="center" width="43">允许</td>
+                    <td class="whitetext" align="center" width="43"> <a class="blue" href="redr_rule_form.php?rule_no=1000000009">查看借阅规则</a></td>
+                </tr>
+                <tr>
+                    <td class="whitetext" width="125">本、专科生借阅规则(不能预约)</td>
+                    <td class="whitetext" align="left" width="123">人文社科类图书(3楼),自然科学类图书(5楼),经济类图书(9楼),电子及计算机技术类图书(7楼),语言文字类图书(10楼),文学类图书(4楼),密集书库(1楼),日韩文图书(12楼),艺术类图书(11楼),中、外文现刊阅览区(图东楼3,4楼),西文图书(6楼),法律类图书(8楼)</td>
+                    <td class="whitetext" align="left" width="106">小说类</td>
+                    <td class="whitetext" align="center" width="78">20</td>
+                    <td class="whitetext" align="center" width="31">30</td>
+                    <td class="whitetext" align="center" width="43">不允许</td>
+                    <td class="whitetext" align="center" width="43">允许</td>
+                    <td class="whitetext" align="center" width="43"> <a class="blue" href="redr_rule_form.php?rule_no=1000000002">查看借阅规则</a></td>
+                </tr>
+                </tbody></table>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript">
+<!--
+$("#rule").hide();
+function toggle(){
+	$("#rule").toggle();
+}
+-->
+</script><div id="footer"><div id="copy"><p> 山东大学（威海）图书馆&nbsp;&nbsp; OPAC v5.0.1.0113  &nbsp;&nbsp;</p><p>© 1999-2013 <a target="_blank" href="http://www.libsys.com.cn">Jiangsu Huiwen Software Ltd. 江苏汇文软件有限公司</a></p></div></div></div></body></html>
