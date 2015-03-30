@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,10 +28,7 @@ import java.util.List;
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.NowAdapter;
-import edu.sdu.wh.ibook.po.BookInfo;
-import edu.sdu.wh.ibook.po.HisBookInfo;
 import edu.sdu.wh.ibook.po.NowBookInfo;
-import edu.sdu.wh.ibook.ui.MainActivity;
 import edu.sdu.wh.ibook.ui.NowDetialActivity;
 import edu.sdu.wh.ibook.service.BookInfoNowJsoupHtml;
 
@@ -44,7 +40,6 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
     private View v;
     private BaseAdapter adapter;
     private Activity activity;
-    private IBookApp bookApp;
     private String name;
     private List<NowBookInfo> bookInfos;
 
@@ -71,23 +66,18 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
 
     //更新数据进行，应该写线程
     public void initData() {
-
         if(name!=null)
         {
             pb_loading.setVisibility(View.VISIBLE);
             Thread loadThread = new Thread(new LoadThread());
             loadThread.start();
         }
-
-
-
     }
 
     private void initView() {
         activity=getActivity();
         context=activity.getApplicationContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        bookApp = (IBookApp) activity.getApplication();
         name="why";
 
         v = inflater.inflate(R.layout.fragment_borrownow, null);
@@ -103,22 +93,18 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
 
                 switch (msg.what) {
                     case 0:
+                        pb_loading.setVisibility(View.INVISIBLE);
+                        Toast.makeText(context, "当前未借阅图书", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         pb_loading.setVisibility(View.INVISIBLE);
                         Toast.makeText(context, "数据已加载", Toast.LENGTH_SHORT).show();
-
                         onLoad(lv);
                         break;
-
                 }
             }
         };
-
     }
-
-
-
     @Override
     public void onLoad(View view) {
         adapter.notifyDataSetChanged();
@@ -150,28 +136,28 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
                 }
                 else{
                     String html=EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                    System.out.println(html);
-//                    bookInfos = new BookInfoNowJsoupHtml(html).getBookInfos();
-                    NowBookInfo nowBookInfo=new NowBookInfo();
-                    nowBookInfo.setName_author("钱钟书&99");
-                    nowBookInfo.setPlace("7楼");
-                    nowBookInfo.setBarcode("3333333");
-                    nowBookInfo.setBorrowDate("2012-01-10");
-                    nowBookInfo.setReturnDate("2013-10-10");
-                    nowBookInfo.setRenewNum("1");
-                    bookInfos.add(nowBookInfo);
-                    System.out.println("_____________________________Now++++++++++++++++_____________________________");
-                    Message msg=new Message();
-                    msg.what=1;
-                    handler.sendMessage(msg);
-                }
+                    BookInfoNowJsoupHtml b=new BookInfoNowJsoupHtml(html);
 
+                    for(int i=0;i<b.getBookInfos().size();i++)
+                    {
+                        bookInfos.add(b.getBookInfos().get(i));
+                    }
+
+                    if(bookInfos.size()==1)
+                    {
+                        Message msg=new Message();
+                        msg.what=0;
+                        handler.sendMessage(msg);
+                    }
+                    else {
+                        Message msg=new Message();
+                        msg.what=1;
+                        handler.sendMessage(msg);
+                    }
+                }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
         }
     }
 }

@@ -7,14 +7,9 @@ import android.view.View;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.InputStream;
-import java.util.Date;
 
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
-import edu.sdu.wh.ibook.po.User;
 
 
 /**
@@ -40,9 +35,9 @@ public class UserActivity extends Activity implements View.OnClickListener{
 
     private void initData() {
         iv_userHead.setImageDrawable(getResources().getDrawable(R.drawable.user_head));
-        String name = ((IBookApp)getApplication()).getUser().getUsername();
+        String name = IBookApp.getUser().getUsername();
         tv_userName.setText(name);
-        String num=((IBookApp)getApplication()).getUser().getUsernumber();
+        String num= IBookApp.getUser().getUsernumber();
         tv_userNum.setText(num);
     }
 

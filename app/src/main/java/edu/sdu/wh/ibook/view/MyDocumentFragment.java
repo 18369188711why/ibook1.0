@@ -27,7 +27,6 @@ import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.DocumentAdapter;
 import edu.sdu.wh.ibook.po.Mydocument;
-import edu.sdu.wh.ibook.service.MyDocumentJsoupHtml;
 
 /**
  *
@@ -38,7 +37,6 @@ public class MyDocumentFragment extends Fragment implements LoadListView.LoadLis
     private BaseAdapter adapter;
     private Activity activity;
     private Context context;
-    private IBookApp bookApp;
     private String name;
 
     private LoadListView lv;
@@ -135,7 +133,7 @@ public class MyDocumentFragment extends Fragment implements LoadListView.LoadLis
 
                     String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
                     System.out.println(html);
-//                    documents = new MyDocumentJsoupHtml(html).getMydocuments();
+//                    MyDocumentJsoupHtml m= new MyDocumentJsoupHtml(html);
                     Mydocument document=new Mydocument();
                     document.setDocumentNum("4");
                     document.setTime("2012-03-01");

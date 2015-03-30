@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,7 +20,6 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
-import org.w3c.dom.Entity;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,11 +28,9 @@ import java.util.List;
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.HisAdapter;
-import edu.sdu.wh.ibook.po.BookInfo;
 import edu.sdu.wh.ibook.po.HisBookInfo;
 import edu.sdu.wh.ibook.service.BookInfoHisJsoupHtml;
 import edu.sdu.wh.ibook.ui.HisDetialActivity;
-import edu.sdu.wh.ibook.ui.MainActivity;
 
 /**
  *
@@ -126,9 +122,6 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
     }
 
 
-
-
-
     @Override
     public void onPause() {
         super.onPause();
@@ -167,27 +160,18 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
                 else {
                     String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
                     System.out.println(html);
-//                    bookInfos = new BookInfoHisJsoupHtml(html).getBookInfos();
-                    HisBookInfo hisBookInfo=new HisBookInfo();
-                    hisBookInfo.setName("111");
-                    hisBookInfo.setAuthor("孔子");
-                    hisBookInfo.setPlace("222");
-                    hisBookInfo.setBarcode("33333");
-                    hisBookInfo.setBorrowDate("2012-01-10");
-                    hisBookInfo.setReturnDate("2012-02-10");
-                    bookInfos.add(hisBookInfo);
-                    System.out.println("_____________________________His++++++++++++++++_____________________________");
+                    BookInfoHisJsoupHtml b = new BookInfoHisJsoupHtml(html);
+                    for(int i=0;i<b.getBookInfos().size();i++)
+                    {
+                        bookInfos.add(b.getBookInfos().get(i));
+                    }
                     Message msg=new Message();
                     msg.what=1;
                     handler.sendMessage(msg);
-
                 }
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-
-
         }
     }
 }

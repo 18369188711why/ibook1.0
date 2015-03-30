@@ -23,7 +23,6 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import org.apache.http.Header;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -36,10 +35,8 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.BasicHttpContext;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -66,10 +63,9 @@ public class LoginActivity extends Activity {
     private Handler handler;
 
     private DefaultHttpClient client;
-    private IBookApp bookApp;
 
     private static int GET_CAPTCHA_OK=0,GET_CAPTCHA_WRONG=1,
-            LOGIN_OK=2,LOGIN_WRONG=3,GET_CAPTCHA_TIMEOUT=4;
+            LOGIN_OK=2,LOGIN_WRONG=3;
     private static String URL_CAPTCHA="http://202.194.40.71:8080/reader/captcha.php",
                           URL_LOGIN="http://202.194.40.71:8080/reader/redr_verify.php";
     /*创建界面，获取需要操作的组件*/
@@ -93,11 +89,8 @@ public class LoginActivity extends Activity {
     }
 
     private void initData() {
-        bookApp= (IBookApp) getApplication();
         client = IBookApp.getHttpClient();
 
-        et_user.setText("201200800450");
-        et_password.setText("230825");
         iv_captcha.setImageResource(drawable.captcha);
 
         userNumber = et_user.getText().toString();
@@ -174,7 +167,6 @@ public class LoginActivity extends Activity {
         if (mobile == NetworkInfo.State.CONNECTED || mobile == NetworkInfo.State.CONNECTING)
             return;
         if (wifi == NetworkInfo.State.CONNECTED || wifi == NetworkInfo.State.CONNECTING) {
-            return;
         }
     }
 
@@ -184,27 +176,21 @@ public class LoginActivity extends Activity {
     public class BtnLoginOnClickListener implements View.OnClickListener {
         @Override
         public void onClick(final View view) {
-            System.out.println("start");
             userNumber=et_user.getText().toString();
             password=et_password.getText().toString();
             captcha=et_captche.getText().toString();
 
             pb_login.setVisibility(View.VISIBLE);
-//            pb_login.setAnimation(AnimationUtils.loadAnimation(getApplicationContext(),
-//                    anim.loading));
+
             Thread loginThread = new Thread(new LoginThread());
             loginThread.start();
-
-
         }
     }
 
     private class LoginThread extends Thread {
-        String html;
         @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
         @Override
         public void run() {
-            boolean flag;
             System.out.println("ok");
             System.out.println("-------------------------------------------------------------");
             System.out.println("######################"+client.hashCode()+"#################");
@@ -253,57 +239,22 @@ public class LoginActivity extends Activity {
                         }
                 );
 
-                HttpContext httpContext=new BasicHttpContext();
-
-
-                HttpResponse response=client.execute(post,httpContext);
-
-                System.out.println(client.getCookieStore().toString());
+                HttpResponse response=client.execute(post);
 
                 User user=new User();
                 user.setUsername("why");
                 user.setUsernumber(userNumber);
                 user.setUserunit("机电与信息工程学院");
                 user.setUsergender("女");
-                IBookApp iBookApp= (IBookApp) getApplication();
-                iBookApp.setUser(user);
-
-
+                IBookApp.setUser(user);
 
                 switch (response.getStatusLine().getStatusCode()){
                     case 302:
-                        long time=System.currentTimeMillis();
-//                            html=EntityUtils.toString(infoResponse.getEntity(),HTTP.UTF_8);
-                        System.out.println("302!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
-                        Header location=response.getFirstHeader("Location");
-                        System.out.println(location);
-                        html=EntityUtils.toString(response.getEntity(),HTTP.UTF_8);
-
-                        System.out.println(html);
-
-
-
-
-//                        HttpGet get=new HttpGet(URL_BASIC+location.getValue());
-//                        get.setHeader("Referer", URL_LOGIN);
-////                      get.addHeader("Cookie",cookie);
-//
-//                        HttpResponse response1=client.execute(get);
-//                        int code=response1.getStatusLine().getStatusCode();
-
-
-                        boolean bool=client.getRedirectHandler().isRedirectRequested(response,httpContext);
-                        System.out.println(bool+"总共执行时间为："+(System.currentTimeMillis()-time)+"毫秒");
-
-
                         Message msg=new Message();
                         msg.what = LOGIN_OK;
                         handler.sendMessage(msg);
                         break;
                     case 200:
-                        html=EntityUtils.toString(response.getEntity(),HTTP.UTF_8);
-                        System.out.println(html+"~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~200!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                         Message msg0=new Message();
                         msg0.what=LOGIN_WRONG;
                         handler.sendMessage(msg0);
@@ -321,14 +272,6 @@ public class LoginActivity extends Activity {
             }catch (Exception e) {
                 System.out.println("---------------------线程错误------------------");
                 e.printStackTrace();
-//            }finally {
-////                if (html != null) {
-////                    try {
-////                        html.close();
-////                    } catch (IOException e) {
-////                        e.printStackTrace();
-////                    }
-////                }
            }
         }
 
@@ -360,15 +303,14 @@ public class LoginActivity extends Activity {
             get.addHeader("Connection","Keep-Alive");
 
             InputStream html = null;
+
             try {
                 HttpResponse response = client.execute(get);
                 flag = response.getStatusLine().getStatusCode() == 200;
                 HttpEntity entity = response.getEntity();
 
-
                 CookieStore cookieStore = client.getCookieStore();
                 IBookApp.setCookieStore(cookieStore);
-                System.out.println(cookieStore.getCookies());
 
                 html = entity.getContent();
                 if (!flag) {
@@ -387,11 +329,6 @@ public class LoginActivity extends Activity {
                     handler.sendMessage(msg);
                 }
             }
-//            catch (ConnectTimeoutException e){
-//                Message msg=new Message();
-//                msg.what=GET_CAPTCHA_TIMEOUT;
-//                handler.sendMessage(msg);
-//            }
             catch (IOException e) {
                 e.printStackTrace();
             }catch (Exception e){
@@ -407,5 +344,4 @@ public class LoginActivity extends Activity {
             }
         }
     }
-
 }

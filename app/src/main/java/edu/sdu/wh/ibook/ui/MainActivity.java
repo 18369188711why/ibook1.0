@@ -153,11 +153,8 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
-        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -255,8 +252,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
 
     private class LoadThread implements Runnable {
+        String html;
         @Override
         public void run() {
+            long time=System.currentTimeMillis();
             DefaultHttpClient client= IBookApp.getHttpClient();
             HttpGet get=new HttpGet(URL_INFO);
 
@@ -265,9 +264,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 HttpResponse response=client.execute(get);
                 flag=response.getStatusLine().getStatusCode()==200;
 
-                String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                System.out.println(html);
-
+                html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
 
                 if(!flag){
                     Message msg=new Message();
@@ -276,9 +273,13 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 }
                 else
                 {
-//                UserJsoupHtml userJsoupHtml=new UserJsoupHtml(html);
-//                userJsoupHtml.parseHtml();
-//                User user=userJsoupHtml.getUser();
+                    UserJsoupHtml userJsoupHtml=new UserJsoupHtml(html);
+                    userJsoupHtml.parseHtml();
+                    User user=userJsoupHtml.getUser();
+                    IBookApp.setUser(user);
+
+                    long currentTime=System.currentTimeMillis();
+                    System.out.println("时间为：：：：：："+(currentTime-time));
                     Message msg=new Message();
                     msg.what=1;
                     handler.sendMessage(msg);

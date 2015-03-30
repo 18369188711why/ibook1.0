@@ -3,6 +3,7 @@ package edu.sdu.wh.ibook.service;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.sdu.wh.ibook.po.HisBookInfo;
@@ -31,21 +32,21 @@ public class BookInfoHisJsoupHtml extends JsoupHtml{
                 select("table").
                 select("tbody").
                 select("tr");
+        bookInfos=new ArrayList<HisBookInfo>();
         if(contents.size()==1)
         {
-            bookInfos.add(new HisBookInfo());
+            bookInfos.add(null);
             return;
         }
         for(int i=1;i<contents.size();i++)
         {
             HisBookInfo bookInfo = new HisBookInfo();
-            Elements books = contents.get(i).select("td");
-            bookInfo.setBarcode(books.get(1).text());
-            bookInfo.setName(books.get(2).text());
-            bookInfo.setAuthor(books.get(3).text());
-            bookInfo.setBorrowDate(books.get(4).text());
-            bookInfo.setReturnDate(books.get(5).text());
-            bookInfo.setPlace(books.get(6).text());
+            bookInfo.setBarcode(contents.get(i).select("td").get(1).text());
+            bookInfo.setName(contents.get(i).select("td").get(2).text());
+            bookInfo.setAuthor(contents.get(i).select("td").get(3).text());
+            bookInfo.setBorrowDate(contents.get(i).select("td").get(4).text());
+            bookInfo.setReturnDate(contents.get(i).select("td").get(5).text());
+            bookInfo.setPlace(contents.get(i).select("td").get(6).text());
             bookInfos.add(bookInfo);
         }
     }

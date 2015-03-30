@@ -15,7 +15,7 @@ public class UserJsoupHtml extends JsoupHtml{
     public UserJsoupHtml(String html) {
         super(html);
         document=super.getDocument();
-        this.parseHtml();
+        user=new User();
     }
 
     public User getUser() {
@@ -30,21 +30,24 @@ public class UserJsoupHtml extends JsoupHtml{
                 select("table").
                 select("tbody").
                 select("tr");
-        user=new User();
         String userNameCon=contents.get(0).select("td").get(1).text();
-        String[] userName=userNameCon.split(":");
+        String[] userName=userNameCon.split("：");
         user.setUsername(userName[1]);
-        String userNumCon=contents.get(0).select("td").get(2).text();
-        String[] userNum=userNumCon.split(":");
-        user.setUsernumber(userNum[1]);
-        String userUnit=contents.get(6).select("td").get(0).text();
 
-        user.setUserunit(userUnit);
-        String userGender=contents.get(6).select("td").get(3).text();
-        user.setUsergender(userGender);
+        String userNumCon=contents.get(0).select("td").get(2).text();
+        String[] userNum=userNumCon.split("：");
+        user.setUsernumber(userNum[1]);
+
+        String userUnitCon=contents.get(6).select("td").get(0).text();
+        String[] userUnit=userUnitCon.split("：");
+        user.setUserunit(userUnit[1]);
+
+        String userGenderCon=contents.get(6).select("td").get(3).text();
+        String[] userGender=userGenderCon.split("：");
+        user.setUsergender(userGender[1]);
     }
-    public String getUserName(){
-        return user.getUsername();
-    }
+//    public String getUserName(){
+//        return user.getUsername();
+//    }
 
 }
