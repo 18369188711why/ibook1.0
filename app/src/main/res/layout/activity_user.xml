@@ -12,27 +12,40 @@
         android:gravity="center"
         android:orientation="vertical"
         >
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/iv_userHead"
-            android:paddingBottom="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/tv_userName"
-            android:textSize="20sp"
-            android:gravity="center_horizontal"
-            android:textColor="#000000"
+            android:textSize="@dimen/text_size_large"
+            android:gravity="top"
+            android:textColor="@color/text"
             android:textStyle="bold"/>
         <TextView
             android:id="@+id/tv_userNum"
+            android:layout_marginLeft="@dimen/marge_left"
+            android:layout_marginStart="@dimen/marge_left"
+            android:layout_marginRight="@dimen/marge_right"
+            android:layout_marginEnd="@dimen/marge_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
-            android:gravity="center_horizontal"
-            android:textSize="12sp"
-            android:textColor="#000000"/>
+            android:gravity="top"
+            android:textSize="@dimen/text_size_middle"
+            android:textColor="@color/text"/>
+
+        <TextView
+            android:id="@+id/tv_msg"
+            android:textSize="@dimen/text_size_middle"
+            android:layout_marginTop="@dimen/marge_top"
+            android:layout_marginLeft="@dimen/marge_left"
+            android:layout_marginStart="@dimen/marge_left"
+            android:layout_marginRight="@dimen/marge_right"
+            android:layout_marginEnd="@dimen/marge_right"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:textColor="@color/text"/>
     </LinearLayout>
 
     <ImageView
@@ -43,14 +56,15 @@
 
 
     <LinearLayout
-        android:paddingTop="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/marge_top"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="3"
         android:orientation="vertical">
         <LinearLayout
+            android:id="@+id/v_search_his"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="center_vertical"
@@ -77,6 +91,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/divider_user_betw_action"/>
         <LinearLayout
+            android:id="@+id/v_asord"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -106,6 +121,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/divider_user_betw_action"/>
         <LinearLayout
+            android:id="@+id/v_preg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -134,6 +150,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/divider_user_betw_action"/>
         <LinearLayout
+            android:id="@+id/v_fine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"

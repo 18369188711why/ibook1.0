@@ -23,13 +23,22 @@ public class UserJsoupHtml extends JsoupHtml{
     }
 
     public void parseHtml() {
-        Elements contents=document.select("div[id=\"mainbox\"]").
+
+        Elements elements=document.select("div[id=\"mainbox\"]").
                 select("div[id=\"container\"]").
-                select("div[id=\"mylib_content\"]").
+                select("div[id=\"mylib_content\"]");
+
+
+        Elements contents=elements.
                 select("div[id=\"mylib_info\"]").
                 select("table").
                 select("tbody").
                 select("tr");
+
+        Elements msg=elements.select("div[class=\"mylib_msg\"]");
+
+        user.setMsg(msg.text().substring(0,msg.text().length()-7));
+
         String userNameCon=contents.get(0).select("td").get(1).text();
         String[] userName=userNameCon.split("：");
         user.setUsername(userName[1]);
@@ -46,8 +55,4 @@ public class UserJsoupHtml extends JsoupHtml{
         String[] userGender=userGenderCon.split("：");
         user.setUsergender(userGender[1]);
     }
-//    public String getUserName(){
-//        return user.getUsername();
-//    }
-
 }

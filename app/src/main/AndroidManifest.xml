@@ -2,8 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="edu.sdu.wh.ibook" >
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
     <application
         android:name=".IBookApp"
         android:allowBackup="true"
@@ -13,29 +15,59 @@
         <activity
             android:name=".ui.MainActivity"
             android:label="@string/app_name"
+            android:theme="@style/MainActivity"
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
-        <activity android:name=".ui.WelcomeActivity" >
+        <activity
+            android:name=".ui.WelcomeActivity"
+            android:theme="@style/WelcomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.LoginActivity" >
-
+        <activity
+            android:name=".ui.LoginActivity"
+            android:theme="@style/LoginActivity" >
         </activity>
-        <activity android:name=".ui.UserActivity" >
+        <activity
+            android:name=".ui.UserActivity"
+            android:theme="@style/UserActivity" >
         </activity>
-        <activity android:name=".ui.SearchDetialActivity" >
-        </activity>
-        <activity android:name=".ui.NowDetialActivity" >
-        </activity>
-        <activity android:name=".ui.HisDetialActivity" >
+        <activity android:name=".ui.BookDetailActivity" >
         </activity>
         <activity
             android:name=".ui.SearchResultActivity"
             android:label="@string/title_activity_search_result" >
+        </activity>
+        <activity
+            android:name=".ui.HotActivity"
+            android:label="@string/title_activity_hot" >
+        </activity>
+        <activity
+            android:name=".ui.PostCommentActivity"
+            android:label="@string/title_activity_post_comment" >
+        </activity>
+        <activity
+            android:name=".ui.SearchHisActivity"
+            android:theme="@style/UserItemActivity"
+            android:label="@string/title_activity_search_his" >
+        </activity>
+        <activity
+            android:name=".ui.AsordActivity"
+            android:theme="@style/UserItemActivity"
+            android:label="@string/title_activity_asord" >
+        </activity>
+        <activity
+            android:name=".ui.FineActivity"
+            android:theme="@style/UserItemActivity"
+            android:label="@string/title_activity_fine" >
+        </activity>
+        <activity
+            android:name=".ui.PregActivity"
+            android:theme="@style/UserItemActivity"
+            android:label="@string/title_activity_preg" >
         </activity>
     </application>
 

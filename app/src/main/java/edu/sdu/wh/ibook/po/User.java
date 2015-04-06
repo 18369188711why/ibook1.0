@@ -8,6 +8,16 @@ public class User {
     private String usernumber;
     private String userunit;
     private String usergender;
+    private String msg;
+
+    public void setMsg(String msg) {
+        this.msg = msg;
+    }
+
+    public String getMsg() {
+
+        return msg;
+    }
 
     public String getUsergender() {
         return usergender;

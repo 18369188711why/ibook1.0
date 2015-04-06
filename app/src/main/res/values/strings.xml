@@ -22,12 +22,37 @@
         <item>完全匹配</item>
         <item>任意匹配</item>
     </string-array>
+    <string-array name="hot_type">
+        <item>总体排行</item>
+        <item>A 马列主义、毛泽东思想、邓小平理论</item>
+        <item>B 哲学、宗教</item>
+        <item>C 社会科学总论</item>
+        <item>D 政治、法律</item>
+        <item>E 军事</item>
+        <item>F 经济</item>
+        <item>G 文化、科学、教育、体育</item>
+        <item>H 语言、文学</item>
+        <item>I 文学</item>
+        <item>J 艺术</item>
+        <item>K 历史、地理</item>
+        <item>N 自然科学总论</item>
+        <item>O 数理科学与化学</item>
+        <item>P 天文学、地球科学</item>
+        <item>Q 生物科学</item>
+        <item>R 医药、卫生</item>
+        <item>S 农业科学</item>
+        <item>T 工业技术</item>
+        <item>U 交通运输</item>
+        <item>V 航空、航天</item>
+        <item>X 环境科学，安全科学</item>
+        <item>Z 综合性图书</item>
+    </string-array>
 
     <string name="title_activity_login">Login</string>
-    <string name="action_user01">荐购历史</string>
-    <string name="action_user02">图书预约</string>
-    <string name="action_user03">荐购图书</string>
-    <string name="action_user04">图书委托</string>
+    <string name="action_user01">检索历史</string>
+    <string name="action_user02">荐购历史</string>
+    <string name="action_user03">预约信息</string>
+    <string name="action_user04">违章缴费</string>
     <string name="tab_search">图书搜索</string>
     <string name="tab_borrowNow">当前借阅</string>
     <string name="tab_borrowHis">借阅历史</string>
@@ -35,10 +60,35 @@
     <string name="title_activity_search_result">SearchResultActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_loading">LoadingActivity</string>
-
     <string name="captcha_hint">输入图片中的红色内容</string>
-
+    <string name="login">登 陆</string>
     <string name="hot">热门检索</string>
+    <string name="barcode">条码号:</string>
+    <string name="author">作者:</string>
+    <string name="publishInfo">出版信息:</string>
+    <string name="code">索书号:</string>
+    <string name="placeInfo">馆藏:</string>
+    <string name="borrowNum">借阅册次:</string>
+    <string name="borrowRate">借阅比:</string>
+    <string name="place">馆藏地:</string>
+    <string name="borrowDate">借阅日期:</string>
+    <string name="returnDate">归还日期:</string>
+    <string name="shouldReturnDate">应还日期:</string>
+    <string name="renew">续借量:</string>
+    <string name="renewAction">续借</string>
+    <string name="year">年卷期:</string>
+    <string name="school_place">校区—馆藏地:</string>
+    <string name="status">书刊状态:</string>
+    <string name="intro">简介:</string>
+    <string name="checkDoc">查看简介</string>
+    <string name="checkWibo">查看微博评论</string>
+    <string name="title_activity_hot">HotActivity</string>
+    <string name="title_activity_post_comment">PostCommentActivity</string>
+    <string name="post">提  交</string>
+    <string name="comment">请输入你的评论</string>
+    <string name="title_activity_search_his">search</string>
+    <string name="title_activity_asord">asord</string>
+    <string name="title_activity_fine">fine</string>
+    <string name="title_activity_preg">preg</string>
 
-    <string name="loading">正在加载，请稍后...</string>
 </resources>

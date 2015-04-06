@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="@color/text"
+        android:id="@+id/tv_docName"/>
+    <TextView
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/text_size_middle"
+        android:textColor="@color/text"
+        android:id="@+id/tv_docTime"
+        />
+    <TextView
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tv_docContent"
+        android:textSize="@dimen/text_size_middle"
+        android:textColor="@color/text"/>
+</LinearLayout>

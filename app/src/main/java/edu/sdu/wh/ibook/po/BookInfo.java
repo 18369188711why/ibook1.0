@@ -1,71 +1,56 @@
 package edu.sdu.wh.ibook.po;
 
 /**
- *当前借阅和借阅历史<div id="mylib_content" >
+ *搜索结果的书籍信息
  */
 
 public class BookInfo {
-    private String name;
-    private String ISBN;
+    private String name_code;
     private String type;
-    private String author;
-    private String storedNum;
-    private String publisher;
-    private String avaiableNum;
+    private String author_publisher;
+    private String stored_available_Num;
+    private String link;
 
-    public void setName(String name) {
-        this.name = name;
-    }
 
-    public void setAuthor(String author) {
-        this.author = author;
-    }
-
-    public void setAvaiableNum(String avaiableNum) {
-        this.avaiableNum = avaiableNum;
-    }
-
-    public void setISBN(String ISBN) {
-        this.ISBN = ISBN;
-    }
-
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
-
-    public void setStoredNum(String storedNum) {
-        this.storedNum = storedNum;
+    public void setName_code(String name_code) {
+        this.name_code = name_code;
     }
 
     public void setType(String type) {
         this.type = type;
     }
 
-    public String getISBN() {
-        return ISBN;
+    public void setAuthor_publisher(String author_publisher) {
+        this.author_publisher = author_publisher;
     }
 
-    public String getName() {
-        return name;
+    public void setStored_available_Num(String stored_available_Num) {
+        this.stored_available_Num = stored_available_Num;
+    }
+
+    public void setLink(String link) {
+        this.link = link;
+    }
+
+    public String getName_code() {
+
+        return name_code;
     }
 
     public String getType() {
         return type;
     }
 
-    public String getAuthor() {
-        return author;
+    public String getAuthor_publisher() {
+        return author_publisher;
     }
 
-    public String getAvaiableNum() {
-        return avaiableNum;
+    public String getStored_available_Num() {
+        return stored_available_Num;
     }
 
-    public String getPublisher() {
-        return publisher;
-    }
+    public String getLink() {
 
-    public String getStoredNum() {
-        return storedNum;
+        return link;
     }
 }

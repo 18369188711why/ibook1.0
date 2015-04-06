@@ -30,7 +30,7 @@ import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.HisAdapter;
 import edu.sdu.wh.ibook.po.HisBookInfo;
 import edu.sdu.wh.ibook.service.BookInfoHisJsoupHtml;
-import edu.sdu.wh.ibook.ui.HisDetialActivity;
+import edu.sdu.wh.ibook.ui.BookDetailActivity;
 
 /**
  *
@@ -40,8 +40,6 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
     private BaseAdapter adapter;
     private Activity activity;
     private Context context;
-    private IBookApp bookApp;
-    private String name;
 
     private LoadListView lv;
     private ProgressBar pb_loading;
@@ -51,8 +49,10 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
     private Handler handler;
 
     private static String URL_HIS="http://202.194.40.71:8080/reader/book_hist.php";
+    private static String URL_BASIC="http://202.194.40.71:8080/opac/";
 
 
+    private static int URL_WRONG=0,OK=1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         initView();
@@ -67,18 +67,15 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
 
     public void initData() {
         pb_loading.setVisibility(View.VISIBLE);
-        if(name!=null)
-        {
-            Thread loadThread = new Thread(new LoadThread());
-            loadThread.start();
-        }
+
+        Thread loadThread = new Thread(new LoadThread());
+        loadThread.start();
     }
 
     private void initView() {
         activity = getActivity();
         context = activity.getApplicationContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        name="WHY";
 
         v = inflater.inflate(R.layout.fragment_borrowhistory, null);
         lv = (LoadListView) v.findViewById(R.id.lv_borrowBooksHistory);
@@ -92,19 +89,16 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 0:
-
+                        pb_loading.setVisibility(View.INVISIBLE);
+                        Toast.makeText(context,"加载失败！",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
                         pb_loading.setVisibility(View.INVISIBLE);
-                        Toast.makeText(context, "获取图片失败", Toast.LENGTH_SHORT).show();
                         onLoad(lv);
-
                         break;
-
                 }
             }
         };
-
     }
 
 
@@ -116,9 +110,11 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-        Intent intent1 = new Intent(activity.getApplicationContext(), HisDetialActivity.class);
-        activity.startActivityForResult(intent1, 1);
+        Intent intent = new Intent(activity.getApplicationContext(), BookDetailActivity.class);
+        intent.putExtra("书名",bookInfos.get(i).getName());
+        String link=bookInfos.get(i).getLink().substring(8);
+        intent.putExtra("链接",URL_BASIC+link);
+        activity.startActivityForResult(intent, 3);
     }
 
 
@@ -146,31 +142,36 @@ public class BorrowHisFragment extends Fragment implements LoadListView.LoadList
         @Override
         public void run() {
             boolean flag;
-            HttpClient client = IBookApp.getHttpClient();
-            HttpGet get = new HttpGet(URL_HIS);
-            try {
-                HttpResponse response=client.execute(get);
-                flag=response.getStatusLine().getStatusCode()==200;
-                if(!flag)
-                {
-                    Message msg=new Message();
-                    msg.what=0;
-                    handler.sendMessage(msg);
-                }
-                else {
-                    String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                    System.out.println(html);
-                    BookInfoHisJsoupHtml b = new BookInfoHisJsoupHtml(html);
-                    for(int i=0;i<b.getBookInfos().size();i++)
+            if(bookInfos.size()==0){
+                HttpClient client = IBookApp.getHttpClient();
+                HttpGet get = new HttpGet(URL_HIS);
+                try {
+                    HttpResponse response=client.execute(get);
+                    flag=response.getStatusLine().getStatusCode()==200;
+                    if(!flag)
                     {
-                        bookInfos.add(b.getBookInfos().get(i));
+                        Message msg=new Message();
+                        msg.what=URL_WRONG;
+                        handler.sendMessage(msg);
                     }
-                    Message msg=new Message();
-                    msg.what=1;
-                    handler.sendMessage(msg);
+                    else {
+                        String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+                        BookInfoHisJsoupHtml b = new BookInfoHisJsoupHtml(html);
+                        for(int i=0;i<b.getBookInfos().size();i++)
+                        {
+                            bookInfos.add(b.getBookInfos().get(i));
+                        }
+                        Message msg=new Message();
+                        msg.what=OK;
+                        handler.sendMessage(msg);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
+            }else {
+                Message msg=new Message();
+                msg.what=OK;
+                handler.sendMessage(msg);
             }
         }
     }

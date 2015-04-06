@@ -1,136 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/listviewdemo"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/listviewdemo"
-    android:background="@drawable/tv_bookinfo_status">
-    <RelativeLayout
+    android:background="@drawable/tv_bookinfo_status"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_bookNowNameAuthor"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        >
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:textColor="@color/text"
+        android:textSize="@dimen/text_size_large" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_marginTop="@dimen/marge_top"
+        android:orientation="horizontal">
+
         <TextView
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/text_size_large"
+            android:text="@string/barcode"
             android:textColor="@color/text"
-            android:id="@+id/tv_bookNowNameAuthor"/>
-    </RelativeLayout>
+            android:textSize="@dimen/text_size_middle" />
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        >
-        <LinearLayout
+        <TextView
+            android:id="@+id/tv_bookNowBarcode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="条码号"
-                android:textSize="@dimen/text_size_middle"
-                android:textColor="@color/text"
-                android:id="@+id/tv_bookInfo1"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_middle"
-                android:textColor="@color/text"
-                android:id="@+id/tv_bookNowBarcode"/>
-        </LinearLayout>
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_marginTop="@dimen/marge_top"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:text="馆藏地:"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+
+        <TextView
+            android:id="@+id/tv_bookNowPlace"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_marginTop="@dimen/marge_top"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/borrowDate"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+
+        <TextView
             android:id="@+id/tv_bookNowBorrDate"
-            android:textSize="@dimen/text_size_middle"
-            android:textColor="@color/text"
-            />
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"        >
-        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="馆藏地:"
-                android:textSize="@dimen/text_size_middle"
-                android:textColor="@color/text"
-                android:id="@+id/tv_bookInfo2"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/tv_bookNowPlace"
-                android:textSize="@dimen/text_size_middle"
-                android:textColor="@color/text"
-                />
-        </LinearLayout>
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_marginTop="@dimen/marge_top"
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/tv_bookNowRetuDate"
-            android:textSize="@dimen/text_size_middle"
+            android:text="@string/shouldReturnDate"
             android:textColor="@color/text"
-            />
-    </RelativeLayout>
+            android:textSize="@dimen/text_size_middle" />
 
-    <RelativeLayout
+        <TextView
+            android:id="@+id/tv_bookNowRetuDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+    </LinearLayout>
+
+
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        >
-        <LinearLayout
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_marginTop="@dimen/marge_top"
+        android:orientation="horizontal">
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:orientation="horizontal"
-            android:id="@+id/ll_middle"
-            android:layout_alignTop="@+id/btn_renew"
-            android:layout_alignBottom="@+id/btn_renew"
-            >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_middle"
-                android:text="续借量:"
-                android:textColor="@color/text"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_small"
-                android:textColor="@color/text"
-                android:id="@+id/tv_bookNowRenewNum"/>
-        </LinearLayout>
-        <Button
+            android:text="@string/renew"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+        <TextView
+            android:id="@+id/tv_bookNowRenewNum"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/btn_renew"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:background="@drawable/btn_bg_02"
-            android:text="续借"
-            android:textColor="#bbffffff"
-            />
-    </RelativeLayout>
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle" />
+    </LinearLayout>
+
+
 </LinearLayout>

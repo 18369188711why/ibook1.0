@@ -4,15 +4,17 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
 
-    <dimen name="text_size_middle">20sp</dimen>
-    <dimen name="text_size_large">30sp</dimen>
-    <dimen name="text_size_small">15sp</dimen>
+    <dimen name="text_size_middle">15sp</dimen>
+    <dimen name="text_size_large">20sp</dimen>
+    <dimen name="text_size_small">10sp</dimen>
 
 
-    <dimen name="marge_left">20dp</dimen>
-    <dimen name="marge_right">15dp</dimen>
+    <dimen name="marge_left">10dp</dimen>
+    <dimen name="marge_right">6dp</dimen>
     <dimen name="marge_top">10dp</dimen>
     <dimen name="marge_bottom">10dp</dimen>
 
     <dimen name="marge_tiny">5dp</dimen>
+
+    <dimen name="divider_height">5dp</dimen>
 </resources>

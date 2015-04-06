@@ -1,7 +1,7 @@
 package edu.sdu.wh.ibook.po;
 
 /**
- *
+ *借阅历史的书籍信息
  */
 public class HisBookInfo {
     private String barcode;
@@ -10,6 +10,7 @@ public class HisBookInfo {
     private String borrowDate;
     private String returnDate;
     private String place;
+    private String link;
 
     public void setBarcode(String barcode) {
         this.barcode = barcode;
@@ -35,6 +36,10 @@ public class HisBookInfo {
         this.place = place;
     }
 
+    public void setLink(String link) {
+        this.link = link;
+    }
+
     public String getBarcode() {
         return barcode;
     }
@@ -57,5 +62,10 @@ public class HisBookInfo {
 
     public String getPlace() {
         return place;
+    }
+
+    public String getLink() {
+
+        return link;
     }
 }

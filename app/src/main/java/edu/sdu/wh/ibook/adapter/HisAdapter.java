@@ -60,8 +60,8 @@ public class HisAdapter extends BaseAdapter{
         TextView tv_bookHisBorrDate= (TextView) v.findViewById(R.id.tv_bookHisBorrDate);
         tv_bookHisBorrDate.setText(bookInfos.get(i).getBorrowDate());
         //归还日期
-        TextView tv_bookInfoAuthor= (TextView) v.findViewById(R.id.tv_bookHisRetuDate);
-        tv_bookInfoAuthor.setText(bookInfos.get(i).getReturnDate());
+        TextView tv_bookHisReturnDate= (TextView) v.findViewById(R.id.tv_bookHisRetuDate);
+        tv_bookHisReturnDate.setText(bookInfos.get(i).getReturnDate());
 
         return v;
     }

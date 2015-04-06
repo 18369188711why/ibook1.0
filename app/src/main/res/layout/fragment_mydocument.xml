@@ -9,7 +9,9 @@
     <edu.sdu.wh.ibook.view.LoadListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/lv_myDocument" />
+        android:id="@+id/lv_myDocument"
+        android:divider="@color/light_white"
+        android:dividerHeight="@dimen/divider_height"/>
 
     <ProgressBar
         android:layout_marginTop="@dimen/activity_vertical_margin"

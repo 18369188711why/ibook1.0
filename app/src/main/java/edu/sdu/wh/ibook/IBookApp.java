@@ -1,14 +1,12 @@
 package edu.sdu.wh.ibook;
 
 import android.app.Application;
-import android.util.Log;
 
 
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpVersion;
 import org.apache.http.ProtocolException;
 import org.apache.http.client.CookieStore;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.params.HttpClientParams;
 import org.apache.http.client.protocol.ClientContext;
 import org.apache.http.conn.ClientConnectionManager;
@@ -18,7 +16,6 @@ import org.apache.http.conn.scheme.PlainSocketFactory;
 import org.apache.http.conn.scheme.Scheme;
 import org.apache.http.conn.scheme.SchemeRegistry;
 import org.apache.http.conn.ssl.SSLSocketFactory;
-import org.apache.http.cookie.ClientCookie;
 import org.apache.http.cookie.Cookie;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.DefaultRedirectHandler;
@@ -36,7 +33,7 @@ import java.net.URI;
 import java.util.List;
 
 import edu.sdu.wh.ibook.po.BookInfo;
-import edu.sdu.wh.ibook.po.Mydocument;
+import edu.sdu.wh.ibook.po.MyComment;
 import edu.sdu.wh.ibook.po.User;
 
 /**
@@ -47,7 +44,7 @@ public class IBookApp extends Application{
     private String nickName;
     private List<BookInfo> bookInfos;
     private List<BookInfo> hisBookInfos;
-    private List<Mydocument> mydocuments;
+    private List<MyComment> mydocuments;
     private int nowNumber,hisNumber;
     private static DefaultHttpClient httpClient;
     private static Cookie cookie;
@@ -81,7 +78,7 @@ public class IBookApp extends Application{
         this.hisBookInfos = hisBookInfos;
     }
 
-    public void setMydocuments(List<Mydocument> mydocuments) {
+    public void setMydocuments(List<MyComment> mydocuments) {
         this.mydocuments = mydocuments;
     }
 
@@ -117,7 +114,7 @@ public class IBookApp extends Application{
         return hisBookInfos;
     }
 
-    public List<Mydocument> getMydocuments() {
+    public List<MyComment> getMydocuments() {
         return mydocuments;
     }
 
@@ -186,9 +183,30 @@ public class IBookApp extends Application{
             schemeRegistry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
             schemeRegistry.register(new Scheme("https", SSLSocketFactory.getSocketFactory(), 443));
             ClientConnectionManager manager = new ThreadSafeClientConnManager(httpParams, schemeRegistry);
+
             this.httpClient = new DefaultHttpClient(manager, httpParams);
 
-
+            httpClient.setRedirectHandler(
+                    new DefaultRedirectHandler(){
+                        @Override
+                        public boolean isRedirectRequested(
+                                HttpResponse response,
+                                HttpContext context) {
+                            System.out.println("isRedirectRequested_response code:"+
+                                    response.getStatusLine()
+                                            .getStatusCode() + "");
+                            return true;
+                        }
+                        @Override
+                        public URI getLocationURI(
+                                HttpResponse response,
+                                HttpContext context)
+                                throws ProtocolException {
+                            // TODO Auto-generated method stub
+                            return null;
+                        }
+                    }
+            );
             httpContext=new BasicHttpContext();
             cookie=new BasicClientCookie("","");
             httpContext.setAttribute(ClientContext.COOKIE_STORE,cookie);

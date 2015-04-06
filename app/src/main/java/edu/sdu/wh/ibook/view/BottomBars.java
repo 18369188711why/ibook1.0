@@ -24,7 +24,7 @@ import edu.sdu.wh.ibook.R;
  */
 public class BottomBars extends View{
 
-    private int mColor=0xFF45C01A;
+    private int mColor=0xA56EC052;
     private Bitmap miconBitmap;
     private String mText="通";
     private int mTextSize= (int)TypedValue.applyDimension(
@@ -60,7 +60,7 @@ public class BottomBars extends View{
                     miconBitmap=drawable.getBitmap();
                     break;
                 case R.styleable.BottomBars_color:
-                    mColor=a.getColor(attr,0xFF45C01A);
+                    mColor=a.getColor(attr,0xA56EC052);
                     break;
                 case R.styleable.BottomBars_text:
                     mText=a.getString(attr);
@@ -75,7 +75,7 @@ public class BottomBars extends View{
         mTextBound=new Rect();
         mTextPaint=new Paint();
         mTextPaint.setTextSize(mTextSize);
-        mTextPaint.setColor(0xc8757575);
+        mTextPaint.setColor(0xc89a9a9a);
 
         mTextPaint.getTextBounds(mText,0,mText.length(),mTextBound);
     }

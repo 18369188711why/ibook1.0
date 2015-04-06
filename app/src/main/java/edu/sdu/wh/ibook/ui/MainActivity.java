@@ -34,7 +34,7 @@ import edu.sdu.wh.ibook.service.UserJsoupHtml;
 import edu.sdu.wh.ibook.view.BorrowHisFragment;
 import edu.sdu.wh.ibook.view.BorrowNowFragment;
 import edu.sdu.wh.ibook.view.BottomBars;
-import edu.sdu.wh.ibook.view.MyDocumentFragment;
+import edu.sdu.wh.ibook.view.MyCommentFragment;
 import edu.sdu.wh.ibook.view.SearchFragment;
 
 
@@ -45,6 +45,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private List<BottomBars> tabIndicators;
     private Date lastTime=null;
     private Handler handler;
+    private DefaultHttpClient client;
 
     private static String URL_INFO="http://202.194.40.71:8080/reader/redr_info.php";
 
@@ -58,14 +59,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         initView();
         initData();
 
-
-
-
+        load();
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
-
         initEvents();
-        load();
     }
 
     private void load() {
@@ -140,7 +137,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         fragments.add(bnFragment);
         BorrowHisFragment bsFragment=new BorrowHisFragment();
         fragments.add(bsFragment);
-        MyDocumentFragment mFragment=new MyDocumentFragment();
+        MyCommentFragment mFragment=new MyCommentFragment();
         fragments.add(mFragment);
     }
 
@@ -159,12 +156,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrolled(int i, float v, int i2) {
-
+        tabIndicators.get(i).setIconAlpha(1-v);
+        tabIndicators.get(i2).setIconAlpha(v);
     }
 
     @Override
     public void onPageSelected(int i) {
-//        pb_loading.setVisibility(View.VISIBLE);
         try {
             switch (i)
                 {
@@ -181,7 +178,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                         Toast.makeText(getApplicationContext(),"数据加载成功...",Toast.LENGTH_LONG).show();
                         break;
                     case 3:
-                        ((MyDocumentFragment)fragments.get(3)).initData();
+                        ((MyCommentFragment)fragments.get(3)).initData();
                         Toast.makeText(getApplicationContext(),"数据加载成功....",Toast.LENGTH_LONG).show();
                         break;
                 }
@@ -255,8 +252,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         String html;
         @Override
         public void run() {
-            long time=System.currentTimeMillis();
-            DefaultHttpClient client= IBookApp.getHttpClient();
+            client= IBookApp.getHttpClient();
             HttpGet get=new HttpGet(URL_INFO);
 
             boolean flag;
@@ -278,8 +274,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                     User user=userJsoupHtml.getUser();
                     IBookApp.setUser(user);
 
-                    long currentTime=System.currentTimeMillis();
-                    System.out.println("时间为：：：：：："+(currentTime-time));
                     Message msg=new Message();
                     msg.what=1;
                     handler.sendMessage(msg);

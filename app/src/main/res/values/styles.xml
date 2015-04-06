@@ -2,7 +2,40 @@
 
     <!-- Base application theme. -->
     <style name="AppTheme" parent="android:Theme.Light">
-        <!-- Customize your theme here. -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
+    
+    <style name="WelcomeActivity">
+        <item name="android:animation">@anim/activity_welcome</item>
+    </style>
+    
+    <style name="MainActivity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_main_open</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_main_open</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_main_close</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_main_close</item>
+    </style>
+
+    <style name="UserItemActivity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_user_item_open</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_user_item_open</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_user_item_close</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_user_item_close</item>
+    </style>
+
+    <style name="UserActivity">
+    <item name="android:activityOpenEnterAnimation">@anim/activity_user_open</item>
+    <item name="android:activityCloseEnterAnimation">@anim/activity_user_open</item>
+    <item name="android:activityOpenExitAnimation">@anim/activity_user_close</item>
+    <item name="android:activityCloseExitAnimation">@anim/activity_user_close</item>
+</style>
+
+    <style name="LoginActivity">
+        <item name="android:activityOpenEnterAnimation">@anim/activity_login_open</item>
+        <item name="android:activityCloseEnterAnimation">@anim/activity_login_open</item>
+        <item name="android:activityOpenExitAnimation">@anim/activity_login_close</item>
+        <item name="android:activityCloseExitAnimation">@anim/activity_login_close</item>
     </style>
 
 
@@ -25,4 +58,7 @@
         <item name="android:maxHeight">30dip</item>
     </style>
 
+    <style name="spinner_style">
+        <item name="android:paddingLeft">0dip</item>
+    </style>
 </resources>

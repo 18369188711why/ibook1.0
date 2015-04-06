@@ -5,47 +5,54 @@
     android:orientation="vertical"
     android:id="@+id/listviewdemo"
     android:background="@drawable/tv_bookinfo_status">
-    <RelativeLayout
+    <TextView
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        >
-        <LinearLayout
+        android:textSize="@dimen/text_size_large"
+        android:id="@+id/tv_bookHisName"
+        android:textColor="@color/text"/>
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:id="@+id/ll_bookInfoTop">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_large"
-                android:id="@+id/tv_bookHisName"
-                android:textColor="@color/text"/>
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/text_size_middle"
-                android:id="@+id/tv_bookHisBarcode"
-                android:textColor="@color/text"/>
+            android:text="@string/barcode"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/text_size_middle"
+            android:id="@+id/tv_bookHisBarcode"
+            android:textColor="@color/text"/>
         </LinearLayout>
 
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"       >
         <LinearLayout
+            android:layout_marginTop="@dimen/marge_top"
+            android:layout_marginLeft="@dimen/marge_left"
+            android:layout_marginStart="@dimen/marge_left"
+            android:layout_marginRight="@dimen/marge_right"
+            android:layout_marginEnd="@dimen/marge_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="作者:"
+                android:text="@string/author"
                 android:id="@+id/tv_bookInfo1"
                 android:textColor="@color/text"
                 android:textSize="@dimen/text_size_middle"
@@ -58,31 +65,21 @@
                 android:textColor="@color/text"/>
         </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:id="@+id/tv_bookHisBorrDate"
-            android:textColor="@color/text"
-            android:textSize="@dimen/text_size_middle"
-            />
-    </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="3dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"        >
+
         <LinearLayout
+            android:layout_marginTop="@dimen/marge_top"
+            android:layout_marginLeft="@dimen/marge_left"
+            android:layout_marginStart="@dimen/marge_left"
+            android:layout_marginRight="@dimen/marge_right"
+            android:layout_marginEnd="@dimen/marge_right"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="馆藏地:"
+                android:text="@string/place"
                 android:textSize="@dimen/text_size_middle"
                 android:id="@+id/tv_bookInfo2"
                 android:textColor="@color/text"/>
@@ -93,14 +90,51 @@
                 android:textColor="@color/text"
                 android:textSize="@dimen/text_size_middle"/>
         </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
+            android:textColor="@color/text"
+            android:text="@string/borrowDate"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_bookHisBorrDate"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:text="@string/returnDate"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:id="@+id/tv_bookHisRetuDate"
             android:textColor="@color/text"
             android:textSize="@dimen/text_size_middle"
             />
-    </RelativeLayout>
+        </LinearLayout>
 </LinearLayout>

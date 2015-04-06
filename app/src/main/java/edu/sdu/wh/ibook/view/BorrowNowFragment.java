@@ -22,6 +22,7 @@ import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.NowAdapter;
 import edu.sdu.wh.ibook.po.NowBookInfo;
-import edu.sdu.wh.ibook.ui.NowDetialActivity;
+import edu.sdu.wh.ibook.ui.BookDetailActivity;
 import edu.sdu.wh.ibook.service.BookInfoNowJsoupHtml;
 
 /**
@@ -40,7 +41,6 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
     private View v;
     private BaseAdapter adapter;
     private Activity activity;
-    private String name;
     private List<NowBookInfo> bookInfos;
 
     private LoadListView lv;
@@ -50,6 +50,8 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
     private Context context;
 
     private static String URL_LIST="http://202.194.40.71:8080/reader/book_lst.php";
+    private static String URL_BASIC="http://202.194.40.71:8080/opac/";
+    private static int URL_WRONG=0,OK=1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -66,19 +68,15 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
 
     //更新数据进行，应该写线程
     public void initData() {
-        if(name!=null)
-        {
-            pb_loading.setVisibility(View.VISIBLE);
-            Thread loadThread = new Thread(new LoadThread());
-            loadThread.start();
-        }
+        pb_loading.setVisibility(View.VISIBLE);
+        Thread loadThread = new Thread(new LoadThread());
+        loadThread.start();
     }
 
     private void initView() {
         activity=getActivity();
         context=activity.getApplicationContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        name="why";
 
         v = inflater.inflate(R.layout.fragment_borrownow, null);
         lv = (LoadListView) v.findViewById(R.id.lv_borrowBooksNow);
@@ -90,7 +88,6 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
 
         handler = new Handler() {
             public void handleMessage(Message msg) {
-
                 switch (msg.what) {
                     case 0:
                         pb_loading.setVisibility(View.INVISIBLE);
@@ -98,7 +95,6 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
                         break;
                     case 1:
                         pb_loading.setVisibility(View.INVISIBLE);
-                        Toast.makeText(context, "数据已加载", Toast.LENGTH_SHORT).show();
                         onLoad(lv);
                         break;
                 }
@@ -113,9 +109,11 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-        Intent intent0 = new Intent(activity.getApplicationContext(), NowDetialActivity.class);
-        activity.startActivityForResult(intent0, 0);
+        Intent intent = new Intent(activity.getApplicationContext(), BookDetailActivity.class);
+        intent.putExtra("书名",bookInfos.get(i).getName_author());
+        String link=bookInfos.get(i).getLink().substring(8);
+        intent.putExtra("链接",URL_BASIC+link);
+        activity.startActivityForResult(intent, 2);
 
     }
 
@@ -123,41 +121,49 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
         boolean flag;
         @Override
         public void run() {
-            HttpClient client=IBookApp.getHttpClient();
-            HttpGet get=new HttpGet(URL_LIST);
-            try {
-                HttpResponse response=client.execute(get);
-                flag=response.getStatusLine().getStatusCode()==200;
-                if(!flag)
-                {
-                    Message msg=new Message();
-                    msg.what=0;
-                    handler.sendMessage(msg);
-                }
-                else{
-                    String html=EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                    BookInfoNowJsoupHtml b=new BookInfoNowJsoupHtml(html);
-
-                    for(int i=0;i<b.getBookInfos().size();i++)
-                    {
-                        bookInfos.add(b.getBookInfos().get(i));
-                    }
-
-                    if(bookInfos.size()==1)
+            if(bookInfos.size()==0){
+                HttpClient client=IBookApp.getHttpClient();
+                HttpGet get=new HttpGet(URL_LIST);
+                try {
+                    HttpResponse response=client.execute(get);
+                    flag=response.getStatusLine().getStatusCode()==200;
+                    if(!flag)
                     {
                         Message msg=new Message();
-                        msg.what=0;
+                        msg.what=URL_WRONG;
                         handler.sendMessage(msg);
                     }
-                    else {
-                        Message msg=new Message();
-                        msg.what=1;
-                        handler.sendMessage(msg);
+                    else{
+                        String html=EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
+                        BookInfoNowJsoupHtml b=new BookInfoNowJsoupHtml(html);
+
+                        for(int i=0;i<b.getBookInfos().size();i++)
+                        {
+                            bookInfos.add(b.getBookInfos().get(i));
+                        }
+
+                        if(bookInfos.size()==1)
+                        {
+                            Message msg=new Message();
+                            msg.what= URL_WRONG;
+                            handler.sendMessage(msg);
+                        }
+                        else {
+                            Message msg=new Message();
+                            msg.what=OK;
+                            handler.sendMessage(msg);
+                        }
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
-            } catch (IOException e) {
-                e.printStackTrace();
             }
+            else {
+                Message msg=new Message();
+                msg.what=OK;
+                handler.sendMessage(msg);
+            }
+
         }
     }
 }

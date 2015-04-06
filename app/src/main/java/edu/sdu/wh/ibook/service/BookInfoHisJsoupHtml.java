@@ -41,12 +41,15 @@ public class BookInfoHisJsoupHtml extends JsoupHtml{
         for(int i=1;i<contents.size();i++)
         {
             HisBookInfo bookInfo = new HisBookInfo();
-            bookInfo.setBarcode(contents.get(i).select("td").get(1).text());
-            bookInfo.setName(contents.get(i).select("td").get(2).text());
-            bookInfo.setAuthor(contents.get(i).select("td").get(3).text());
-            bookInfo.setBorrowDate(contents.get(i).select("td").get(4).text());
-            bookInfo.setReturnDate(contents.get(i).select("td").get(5).text());
-            bookInfo.setPlace(contents.get(i).select("td").get(6).text());
+            Elements book=contents.get(i).select("td");
+
+            bookInfo.setBarcode(book.get(1).text().trim());
+            bookInfo.setName(book.get(2).text().trim());
+            bookInfo.setLink(book.get(2).select("a").first().attr("href"));
+            bookInfo.setAuthor(book.get(3).text().trim());
+            bookInfo.setBorrowDate(book.get(4).text().trim());
+            bookInfo.setReturnDate(book.get(5).text().trim());
+            bookInfo.setPlace(book.get(6).text().trim());
             bookInfos.add(bookInfo);
         }
     }

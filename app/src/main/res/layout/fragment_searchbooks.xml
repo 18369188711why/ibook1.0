@@ -8,12 +8,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <Spinner
             android:id="@+id/spi_searchType"
             android:layout_width="wrap_content"
-            android:layout_height="60dp"/>
+            android:layout_height="50dp"
+            style="@style/spinner_style"
+            />
 
         <EditText
             android:id="@+id/et_search"
@@ -24,16 +26,15 @@
             android:layout_toRightOf="@+id/spi_searchType"
             android:layout_toStartOf="@+id/btn_search"
             android:textColor="#000000" />
-        <!--android:src="@drawable/actionbar_search_icon"-->
         <ImageView
             android:id="@+id/btn_search"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/actionbar_search_icon" />
-
+            android:src="@drawable/search_book" />
     </RelativeLayout>
+
 
     <ProgressBar
         android:id="@+id/pb_loading"
@@ -44,4 +45,20 @@
         android:gravity="center"
         android:layout_gravity="center_vertical"
         android:visibility="invisible" />
+
+    <TextView
+        android:layout_marginTop="@dimen/marge_top"
+        android:padding="@dimen/activity_horizontal_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:id="@+id/tv_hot"
+        android:text="@string/hot"
+        android:clickable="true"
+        android:textSize="@dimen/text_size_large"
+        android:textColor="#000000"
+        />
+
+
 </LinearLayout>
