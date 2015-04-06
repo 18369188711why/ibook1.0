@@ -120,6 +120,7 @@ public class LoginActivity extends Activity {
                         pb_login.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "登录成功！", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
+                        intent.putExtra("UserNumber",userNumber);
                         intent.setClass(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();

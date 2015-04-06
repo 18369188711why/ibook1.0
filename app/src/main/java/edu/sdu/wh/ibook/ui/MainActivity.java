@@ -1,8 +1,6 @@
 package edu.sdu.wh.ibook.ui;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -48,6 +46,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private Date lastTime=null;
     private Handler handler;
     private DefaultHttpClient client;
+    private String userNumber;
 
     private static String URL_INFO="http://202.194.40.71:8080/reader/redr_info.php";
 
@@ -98,6 +97,9 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 }
             }
         };
+
+        Intent intent=getIntent();
+        userNumber=intent.getStringExtra("UserNumber");
         adapter=new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -232,16 +234,14 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     //进入User界面
     public void goUser(View v)
     {
-        SharedPreferences sp=this.getSharedPreferences("user", Context.MODE_PRIVATE);
-        if((IBookApp.getUser() == null) || (!IBookApp.getUser().getUsernumber().equals(sp.getString("USER_NUMBER", ""))))
+        if(IBookApp.getUser() == null )
         {
-            if((!IBookApp.getUser().getUsernumber().equals(sp.getString("USER_NUMBER", ""))))
-            {
-                load();
-            }
+          load();
         }else{
-            Intent intent=new Intent(MainActivity.this,UserActivity.class);
-            this.startActivityForResult(intent, 0);
+
+                Intent intent=new Intent(MainActivity.this,UserActivity.class);
+                this.startActivityForResult(intent, 0);
+
         }
     }
 

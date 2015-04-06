@@ -101,7 +101,6 @@ public class MyCommentFragment extends Fragment implements LoadListView.LoadList
                     break;
                     case 1:
                         pb_loading.setVisibility(View.INVISIBLE);
-                        Toast.makeText(context, "数据已加载", Toast.LENGTH_SHORT).show();
                         onLoad(lv);
                         break;
                 }
