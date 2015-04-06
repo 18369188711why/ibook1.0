@@ -39,6 +39,8 @@ public class UserJsoupHtml extends JsoupHtml{
 
         user.setMsg(msg.text().substring(0,msg.text().length()-7));
 
+        System.out.println(msg.text().substring(0,msg.text().length()-7));
+
         String userNameCon=contents.get(0).select("td").get(1).text();
         String[] userName=userNameCon.split("：");
         user.setUsername(userName[1]);

@@ -19,7 +19,7 @@
             android:windowSoftInputMode="adjustPan|stateHidden" >
         </activity>
         <activity
-            android:name=".ui.WelcomeActivity"
+            android:name=".ui.SplashActivity"
             android:theme="@style/WelcomeActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

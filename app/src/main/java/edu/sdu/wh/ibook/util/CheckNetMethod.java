@@ -17,7 +17,7 @@ public class CheckNetMethod {
 
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         builder.setTitle("网络设置提示").setMessage("网络连接不可用,是否进行设置?")
-                .setPositiveButton("流量", new DialogInterface.OnClickListener() {
+                .setPositiveButton("设置", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // TODO Auto-generated method stub
@@ -27,7 +27,7 @@ public class CheckNetMethod {
                     intent = new Intent(android.provider.Settings.ACTION_WIRELESS_SETTINGS);
                 } else {
                     intent = new Intent();
-                    ComponentName component = new ComponentName("com.android.settings", "com.android.settings.WirelessSettings");
+                    ComponentName component = new ComponentName("com.android.settings", "com.android.settings");
                     intent.setComponent(component);
                     intent.setAction("android.intent.action.VIEW");
                 }

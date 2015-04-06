@@ -4,6 +4,7 @@ import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
@@ -59,6 +60,7 @@ public class LoginActivity extends Activity {
     private String userNumber, password,captcha;
     private ProgressBar pb_login;
     private Handler handler;
+    private SharedPreferences sp;
 
     private DefaultHttpClient client;
 
@@ -75,10 +77,14 @@ public class LoginActivity extends Activity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(layout.activity_login);
+        sp = this.getSharedPreferences("user", Context.MODE_PRIVATE);
+        sp.edit().putBoolean("AUTO_ISCHECK", true).apply();
+
         checkInternet();
         initView();
         initData();
         initEvent();
+
     }
 
     private void initEvent() {
@@ -91,20 +97,12 @@ public class LoginActivity extends Activity {
 
         iv_captcha.setImageResource(drawable.captcha);
 
+        et_user.setText(sp.getString("USER_NUMBER",""));
+        et_password.setText(sp.getString("PASSWORD",""));
+
         userNumber = et_user.getText().toString();
         password = et_password.getText().toString();
         captcha = et_captcha.getText().toString();
-
-        if(userNumber==null||password==null||captcha==null)
-        {
-            btnLogin.setClickable(false);
-            btnLogin.setSelected(false);
-            btnLogin.setVisibility(View.INVISIBLE);
-        }
-        else{
-            btnLogin.setClickable(true);
-            btnLogin.setVisibility(View.VISIBLE);
-        }
 
         //使用Handler机制，对于不同的信息进行不同的反应
         handler = new Handler() {
@@ -125,6 +123,10 @@ public class LoginActivity extends Activity {
                         intent.setClass(LoginActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
+                        SharedPreferences.Editor editor = sp.edit();
+                        editor.putString("USER_NUMBER", userNumber);
+                        editor.putString("PASSWORD",password);
+                        editor.apply();
                         break;
                     case 3:
                         pb_login.setVisibility(View.GONE);
@@ -228,8 +230,6 @@ public class LoginActivity extends Activity {
                 post.addHeader("Connection","Keep-Alive");
                 post.addHeader("Cache-Control","no-cache");
 
-
-
                 HttpResponse response=client.execute(post);
 
                 switch (response.getStatusLine().getStatusCode()){
@@ -252,11 +252,7 @@ public class LoginActivity extends Activity {
                 e1.printStackTrace();
             }catch (Exception e) {
                 e.printStackTrace();
-           }finally {
-                Message msg=new Message();
-                msg.what=URL_CONNECT_OUTTIME;
-                handler.sendMessage(msg);
-            }
+           }
         }
 
         private boolean isNumber(String captcha) {

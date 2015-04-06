@@ -1,6 +1,8 @@
 package edu.sdu.wh.ibook.ui;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -156,8 +158,14 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     @Override
     public void onPageScrolled(int i, float v, int i2) {
-        tabIndicators.get(i).setIconAlpha(1-v);
-        tabIndicators.get(i2).setIconAlpha(v);
+        if (v > 0)
+        {
+            BottomBars left = tabIndicators.get(i);
+            BottomBars right = tabIndicators.get(i + 1);
+            left.setIconAlpha(1 - v);
+            right.setIconAlpha(v);
+        }
+
     }
 
     @Override
@@ -170,16 +178,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                         break;
                     case 1:
                         ((BorrowNowFragment)fragments.get(1)).initData();
-                        Toast.makeText(getApplicationContext(),"数据加载成功...",Toast.LENGTH_LONG).show();
-
                         break;
                     case 2:
                         ((BorrowHisFragment)fragments.get(2)).initData();
-                        Toast.makeText(getApplicationContext(),"数据加载成功...",Toast.LENGTH_LONG).show();
                         break;
                     case 3:
                         ((MyCommentFragment)fragments.get(3)).initData();
-                        Toast.makeText(getApplicationContext(),"数据加载成功....",Toast.LENGTH_LONG).show();
                         break;
                 }
         }
@@ -228,8 +232,17 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     //进入User界面
     public void goUser(View v)
     {
-        Intent intent=new Intent(MainActivity.this,UserActivity.class);
-        this.startActivityForResult(intent, 0);
+        SharedPreferences sp=this.getSharedPreferences("user", Context.MODE_PRIVATE);
+        if((IBookApp.getUser() == null) || (!IBookApp.getUser().getUsernumber().equals(sp.getString("USER_NUMBER", ""))))
+        {
+            if((!IBookApp.getUser().getUsernumber().equals(sp.getString("USER_NUMBER", ""))))
+            {
+                load();
+            }
+        }else{
+            Intent intent=new Intent(MainActivity.this,UserActivity.class);
+            this.startActivityForResult(intent, 0);
+        }
     }
 
 
@@ -246,7 +259,11 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         super.onBackPressed();
     }
 
+    @Override
+    protected void onDestroy() {
 
+        super.onDestroy();
+    }
 
     private class LoadThread implements Runnable {
         String html;

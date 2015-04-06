@@ -8,7 +8,7 @@
     <EditText
         android:layout_marginStart="@dimen/marge_left"
         android:layout_marginLeft="@dimen/marge_left"
-        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginTop="20dp"
         android:layout_marginBottom="@dimen/marge_bottom"
         android:layout_marginRight="@dimen/marge_right"
         android:layout_marginEnd="@dimen/marge_right"

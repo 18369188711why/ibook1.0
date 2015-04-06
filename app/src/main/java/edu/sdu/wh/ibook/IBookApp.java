@@ -1,6 +1,8 @@
 package edu.sdu.wh.ibook;
 
 import android.app.Application;
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 
 
 import org.apache.http.HttpResponse;
@@ -130,7 +132,16 @@ public class IBookApp extends Application{
     public void onCreate(){
         super.onCreate();
         this.createHttpClient();
+//        this.createDB();
     }
+
+//    private void createDB() {
+//        //创建或打开数据库
+//        SQLiteDatabase db=openOrCreateDatabase("ibook.db", Context.MODE_PRIVATE, null);
+//        db.execSQL("DROP TABLE IF EXISTS user");
+//        //
+//        db.execSQL("CREATE TABLE user(_id INTEGER PRIMARY KEY AUTOINCREMENT, number VARCHAR, password SMALLINT)");
+//    }
 
     public static void setCookie(Cookie cookie) {
         IBookApp.cookie = cookie;
