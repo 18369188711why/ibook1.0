@@ -9,7 +9,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="40dp"
-        android:background="#000000"
+        android:background="@color/bar_bg"
         >
         <ImageView
             android:layout_width="wrap_content"
@@ -28,10 +28,9 @@
             android:layout_width="fill_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#ffffff"
         />
     <LinearLayout
-        android:background="@drawable/tab_bg"
+        android:background="@color/bar_bg"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -43,7 +42,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             why:icon="@drawable/icon_search"
-            why:color="#45c01a"
+            why:color="@color/bg_text"
             why:text="@string/tab_search"
             why:text_size="12sp"
             />
@@ -54,7 +53,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             why:icon="@drawable/icon_borrow_now"
-            why:color="#45c01a"
+            why:color="@color/bg_text"
             why:text="@string/tab_borrowNow"
             why:text_size="12sp"
             />
@@ -65,7 +64,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             why:icon="@drawable/icon_borrow_his"
-            why:color="#45c01a"
+            why:color="@color/bg_text"
             why:text="@string/tab_borrowHis"
             why:text_size="12sp"
             />
@@ -76,7 +75,7 @@
             android:layout_weight="1"
             android:padding="5dp"
             why:icon="@drawable/icon_mydocument"
-            why:color="#45c01a"
+            why:color="@color/bg_text"
             why:text="@string/tab_myDocument"
             why:text_size="12sp"
             />

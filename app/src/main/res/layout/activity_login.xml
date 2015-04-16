@@ -15,6 +15,7 @@
         android:layout_height="40dp"
         android:textColor="#000000"
         android:textCursorDrawable="@color/black"
+        android:hint="@string/inputuser"
         android:cursorVisible="true"
         android:inputType="textPersonName"
         android:background="@drawable/input_bg"
@@ -28,6 +29,7 @@
         android:layout_height="40dp"
         android:textColor="#000000"
         android:textCursorDrawable="@color/black"
+        android:hint="@string/inputpassword"
         android:cursorVisible="true"
         android:inputType="textPassword"
         android:background="@drawable/input_bg"
@@ -70,14 +72,4 @@
         android:gravity="center"
         android:layout_gravity="center"
         android:text="@string/login"/>
-
-    <ProgressBar
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/pb_login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:visibility="invisible"
-        style="@style/progressBar"
-    />
 </LinearLayout>

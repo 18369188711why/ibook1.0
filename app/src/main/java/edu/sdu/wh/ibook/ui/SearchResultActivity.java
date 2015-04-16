@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
@@ -19,6 +18,8 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,13 +31,17 @@ import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.SearchResultAdapter;
 import edu.sdu.wh.ibook.po.BookInfo;
-import edu.sdu.wh.ibook.service.BookInfoSearchJsoupHtml;
+import edu.sdu.wh.ibook.util.GetContent;
+import edu.sdu.wh.ibook.util.ToDocument;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 
 public class SearchResultActivity extends Activity implements AdapterView.OnItemClickListener {
     private Handler handler;
     private static String url="http://202.194.40.71:8080/opac/openlink.php?";
+    private static String URL_BASIC="http://202.194.40.71:8080/opac/";
     private ListView lv_bookList;
-    private ProgressBar progressBar;
+    private LoadingDialog loading;
+
     private String type;
     private String name;
     private List<BookInfo> bookInfos;
@@ -77,7 +82,7 @@ public class SearchResultActivity extends Activity implements AdapterView.OnItem
     }
 
     private void load() {
-        progressBar.setVisibility(View.VISIBLE);
+        loading.show();
         Thread loadThread=new Thread(new LoadThread());
         loadThread.start();
     }
@@ -88,28 +93,30 @@ public class SearchResultActivity extends Activity implements AdapterView.OnItem
 
     private void initView() {
         lv_bookList= (ListView) findViewById(R.id.lv_searchResult);
-        progressBar= (ProgressBar) findViewById(R.id.pb_loading);
-        progressBar.setVisibility(View.INVISIBLE);
-    }
 
+        lv_bookList.setEmptyView(findViewById(R.id.empty_view));
+
+        loading=new LoadingDialog(this,"Loading....");
+
+    }
     private void initData() {
         handler=new Handler(){
             public void handleMessage(Message msg){
                 switch (msg.what)
                 {
                     case 0:
-                        progressBar.setVisibility(View.INVISIBLE);
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"搜索错误",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        progressBar.setVisibility(View.INVISIBLE);
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"成功",Toast.LENGTH_SHORT).show();
                         SearchResultAdapter adapter=new SearchResultAdapter(getApplicationContext(),
                                 bookInfos);
                         lv_bookList.setAdapter(adapter);
                         break;
                     case 2:
-                        progressBar.setVisibility(View.INVISIBLE);
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"搜索结果为空",Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -148,21 +155,7 @@ public class SearchResultActivity extends Activity implements AdapterView.OnItem
                     handler.sendMessage(msg);
                 } else {
                     String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-
-                    BookInfoSearchJsoupHtml s=new BookInfoSearchJsoupHtml(html);
-                    List<BookInfo> books=s.getBookInfos();
-                    if(books.size()==0){
-                        Message msg=new Message();
-                        msg.what=INFO_NULL;
-                        handler.sendMessage(msg);
-                        return;
-                    }
-                    for(int i=0;i<books.size();i++){
-                        bookInfos.add(books.get(i));
-                    }
-                    Message msg = new Message();
-                    msg.what = OK;
-                    handler.sendMessage(msg);
+                    parseHtml(html);
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -181,5 +174,56 @@ public class SearchResultActivity extends Activity implements AdapterView.OnItem
         int id = item.getItemId();
         return id == R.id.action_settings || super.onOptionsItemSelected(item);
 
+    }
+
+    public void parseHtml(String html) {
+        bookInfos=new ArrayList<BookInfo>();
+        Elements contents= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
+                select("div[id=\"container\"]").select("div[id=\"content\"]");
+
+        if(contents.size()==0){
+            Message msg=new Message();
+            msg.what=INFO_NULL;
+            handler.sendMessage(msg);
+            return;
+        }
+        else{
+            Elements books=contents.select("div[class=\"book_article\"]").
+                    get(3).
+                    select("ol[id=\"search_book_list\"]").
+                    select("li[class=\"book_list_info\"]");
+
+            for (int i = 0; i < books.size(); i++) {
+                BookInfo bookInfo=new BookInfo();
+
+                String type_name_ISBN=books.get(i).select("h3").text();
+                String type=books.get(i).select("h3").select("span").text();
+                String name_ISBN=type_name_ISBN.substring(type.length(),type_name_ISBN.length());
+
+                Element a=books.get(i).select("a").first();
+                String link=a.attr("href");
+                //书的链接
+                bookInfo.setLink(URL_BASIC+link);
+
+                //书名和ISBN
+                bookInfo.setName_code(name_ISBN);
+
+                //书种类
+                bookInfo.setType(type);
+
+                String author_publish_number=books.get(i).select("p").text();
+                String number=books.get(i).select("p").select("span").text();
+                String author_publisher= GetContent.getContent(author_publish_number.substring(number.length(), author_publish_number.length()));
+
+                //馆藏&可借
+                bookInfo.setStored_available_Num(number);
+                //作者&出版社
+                bookInfo.setAuthor_publisher(author_publisher);
+                bookInfos.add(bookInfo);
+            }
+            Message msg = new Message();
+            msg.what = OK;
+            handler.sendMessage(msg);
+        }
     }
 }

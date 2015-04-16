@@ -9,16 +9,15 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.select.Elements;
 
 
 import java.io.IOException;
@@ -27,12 +26,10 @@ import java.util.List;
 
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
-import edu.sdu.wh.ibook.adapter.CommentAdapter;
 import edu.sdu.wh.ibook.adapter.DetailAdapter;
 import edu.sdu.wh.ibook.po.BookDetail;
-import edu.sdu.wh.ibook.po.Comment;
-import edu.sdu.wh.ibook.service.BookDetailJsoupHtml;
-import edu.sdu.wh.ibook.service.IntroJsoupHtml;
+import edu.sdu.wh.ibook.util.ToDocument;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 
 
 /**
@@ -42,9 +39,10 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
     private String link;
     private TextView tv_bookName_code;
     private ListView lv_bookDetail;
+    private LoadingDialog loading;
+
     private String bookName_code;
     private List<BookDetail> bookDetails;
-    private ProgressBar progressBar;
     private DetailAdapter detailAdapter;
     private Handler handler;
     private static int URL_WRONG=0,OK=1;
@@ -67,7 +65,7 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
     }
 
     private void initData() {
-        progressBar.setVisibility(View.VISIBLE);
+        loading.show();
         Thread thread=new Thread(new LoadThread());
         thread.start();
     }
@@ -77,8 +75,7 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
 
         lv_bookDetail= (ListView) findViewById(R.id.lv_bookDetail);
 
-        progressBar= (ProgressBar) findViewById(R.id.pb_loading);
-        progressBar.setVisibility(View.INVISIBLE);
+        loading=new LoadingDialog(this,"Loading.....");
 
         handler=new Handler(){
             @Override
@@ -87,11 +84,11 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
                 switch (msg.what)
                 {
                     case 0:
-                        progressBar.setVisibility(View.INVISIBLE);
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"链接错误！",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        progressBar.setVisibility(View.INVISIBLE);
+                        loading.dismiss();
                         tv_bookName_code.setText(bookName_code);
                         detailAdapter=new DetailAdapter(getApplicationContext(),bookDetails);
                         lv_bookDetail.setAdapter(detailAdapter);
@@ -120,8 +117,7 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
                 boolean flag=response.getStatusLine().getStatusCode()==200;
                 if(flag)
                 {
-                    BookDetailJsoupHtml content=new BookDetailJsoupHtml(html);
-                    bookDetails=content.getBookDetails();
+                    parseHtml(html);
                     Message msg=new Message();
                     msg.what=OK;
                     handler.sendMessage(msg);
@@ -134,6 +130,30 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
             } catch (IOException e) {
                 e.printStackTrace();
             }
+        }
+    }
+
+    public void parseHtml(String html) {
+
+        bookDetails =new ArrayList<BookDetail>();
+        Elements elements= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
+                select("div[id=\"container\"]").
+                select("div[id=\"content_item\"]").
+                select("div[id=\"tabs2\"]").
+                select("div[id=\"tab_item\"]").
+                select("table[id=\"item\"]").
+                select("tbody").
+                select("tr[class=\"whitetext\"]");
+
+        for(int i=0;i<elements.size();i++)
+        {
+            BookDetail bookDetail=new BookDetail();
+            Elements contents=elements.get(i).select("td");
+            bookDetail.setBarcode(contents.get(1).text());
+            bookDetail.setYear(contents.get(2).text());
+            bookDetail.setSchool_place(contents.get(3).text());
+            bookDetail.setStatus(contents.get(4).text());
+            bookDetails.add(bookDetail);
         }
     }
 }

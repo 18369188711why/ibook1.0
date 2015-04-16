@@ -20,6 +20,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,10 +31,11 @@ import java.util.List;
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.po.User;
-import edu.sdu.wh.ibook.service.UserJsoupHtml;
+import edu.sdu.wh.ibook.util.ToDocument;
 import edu.sdu.wh.ibook.view.BorrowHisFragment;
 import edu.sdu.wh.ibook.view.BorrowNowFragment;
 import edu.sdu.wh.ibook.view.BottomBars;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 import edu.sdu.wh.ibook.view.MyCommentFragment;
 import edu.sdu.wh.ibook.view.SearchFragment;
 
@@ -46,7 +48,10 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private Date lastTime=null;
     private Handler handler;
     private DefaultHttpClient client;
-    private String userNumber;
+
+    private String name;
+
+    private LoadingDialog loading;
 
     private static String URL_INFO="http://202.194.40.71:8080/reader/redr_info.php";
 
@@ -60,16 +65,23 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         initView();
         initData();
 
-        load();
+        Intent intent=getIntent();
+        name=intent.getStringExtra("用户名");
+
         viewPager.setOffscreenPageLimit(3);
         viewPager.setAdapter(adapter);
         initEvents();
+
+        load();
     }
 
     private void load() {
-
-        Thread loadThread=new Thread(new LoadThread());
-        loadThread.start();
+        if( IBookApp.getUser()==null
+                || !IBookApp.getUser().getUsernumber().equals(name)) {
+            loading.show();
+            Thread loadThread = new Thread(new LoadThread());
+            loadThread.start();
+        }
     }
 
 
@@ -91,15 +103,17 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 switch (msg.what)
                 {
                     case 0:
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"加载失败",Toast.LENGTH_SHORT).show();
+                        break;
                     case 1:
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"加载数据成功",Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
         };
 
-        Intent intent=getIntent();
-        userNumber=intent.getStringExtra("UserNumber");
         adapter=new FragmentPagerAdapter(getSupportFragmentManager()) {
             @Override
             public Fragment getItem(int i) {
@@ -143,6 +157,8 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         fragments.add(bsFragment);
         MyCommentFragment mFragment=new MyCommentFragment();
         fragments.add(mFragment);
+
+        loading=new LoadingDialog(this,"Loading.....");
     }
 
     @Override
@@ -172,14 +188,12 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
     @Override
     public void onPageSelected(int i) {
-        try {
             switch (i)
                 {
                     case 0:
-                        Thread.sleep(200);
                         break;
                     case 1:
-                        ((BorrowNowFragment)fragments.get(1)).initData();
+                        ((BorrowNowFragment) fragments.get(1)).initData();
                         break;
                     case 2:
                         ((BorrowHisFragment)fragments.get(2)).initData();
@@ -188,10 +202,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                         ((MyCommentFragment)fragments.get(3)).initData();
                         break;
                 }
-        }
-        catch (InterruptedException e) {
-                e.printStackTrace();
-            }
     }
 
     @Override
@@ -234,15 +244,8 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     //进入User界面
     public void goUser(View v)
     {
-        if(IBookApp.getUser() == null )
-        {
-          load();
-        }else{
-
-                Intent intent=new Intent(MainActivity.this,UserActivity.class);
-                this.startActivityForResult(intent, 0);
-
-        }
+        Intent intent=new Intent(MainActivity.this,UserActivity.class);
+        this.startActivityForResult(intent, 0);
     }
 
 
@@ -286,11 +289,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 }
                 else
                 {
-                    UserJsoupHtml userJsoupHtml=new UserJsoupHtml(html);
-                    userJsoupHtml.parseHtml();
-                    User user=userJsoupHtml.getUser();
-                    IBookApp.setUser(user);
-
+                    parseHtml(html);
                     Message msg=new Message();
                     msg.what=1;
                     handler.sendMessage(msg);
@@ -299,5 +298,42 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 e.printStackTrace();
             }
         }
+    }
+
+    public void parseHtml(String html) {
+        User user=new User();
+        Elements elements= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
+                select("div[id=\"container\"]").
+                select("div[id=\"mylib_content\"]");
+
+
+        Elements contents=elements.
+                select("div[id=\"mylib_info\"]").
+                select("table").
+                select("tbody").
+                select("tr");
+
+        Elements msg=elements.select("div[class=\"mylib_msg\"]");
+
+        user.setMsg(msg.text().substring(0,msg.text().length()-7));
+
+
+        String userNameCon=contents.get(0).select("td").get(1).text();
+        String[] userName=userNameCon.split("：");
+        user.setUsername(userName[1]);
+
+        String userNumCon=contents.get(0).select("td").get(2).text();
+        String[] userNum=userNumCon.split("：");
+        user.setUsernumber(userNum[1]);
+
+        String userUnitCon=contents.get(6).select("td").get(0).text();
+        String[] userUnit=userUnitCon.split("：");
+        user.setUserunit(userUnit[1]);
+
+        String userGenderCon=contents.get(6).select("td").get(3).text();
+        String[] userGender=userGenderCon.split("：");
+        user.setUsergender(userGender[1]);
+
+        IBookApp.setUser(user);
     }
 }

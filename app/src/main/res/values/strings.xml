@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">ibook</string>
+    <string name="app_name">ibook2.0</string>
     <string name="action_settings">Settings</string>
 
     <string-array name="search_books_type">
@@ -88,7 +88,23 @@
     <string name="comment">请输入你的评论</string>
     <string name="title_activity_search_his">search</string>
     <string name="title_activity_asord">asord</string>
+    <string name="name">题名:</string>
+    <string name="charge">责任者:</string>
+    <string name="asordDate">荐购日期:</string>
+    <string name="asordStatus">荐购状态:</string>
+    <string name="note">处理备注:</string>
     <string name="title_activity_fine">fine</string>
+    <string name="fine">应缴:</string>
+    <string name="finePay">实缴:</string>
     <string name="title_activity_preg">preg</string>
+    <string name="name_author">题名/责任者</string>
+    <string name="pregDate">预约(到书日):</string>
+    <string name="deadDate">截止日期:</string>
+    <string name="getPlace">取书地:</string>
+
+    <string name="search_his">检索历史:</string>
+    <string name="search_time">检索时间:</string>
+    <string name="inputuser">请输入学号</string>
+    <string name="inputpassword">请输入密码(初始密码为学号)</string>
 
 </resources>

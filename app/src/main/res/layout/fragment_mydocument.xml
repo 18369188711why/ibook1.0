@@ -5,22 +5,19 @@
     android:id="@+id/myDocumentPage"
     android:background="@color/bg"
     android:orientation="vertical">
-
-    <edu.sdu.wh.ibook.view.LoadListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/lv_myDocument"
-        android:divider="@color/light_white"
-        android:dividerHeight="@dimen/divider_height"/>
-
-    <ProgressBar
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/pb_loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center_horizontal"
-        android:visibility="invisible"
-        style="@style/progressBar"
-        />
+        android:layout_height="wrap_content">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/lv_myDocument"
+            android:divider="@color/bg"
+            android:dividerHeight="@dimen/divider_height"/>
+        <ImageView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/comment_null"/>
+    </FrameLayout>
 </LinearLayout>

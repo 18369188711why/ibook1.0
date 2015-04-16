@@ -16,7 +16,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import java.util.List;
 
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.ui.HotActivity;
@@ -88,6 +87,7 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         };
         rightAdapter.setDropDownViewResource(R.layout.spinner_item);
         spinn_func.setAdapter(rightAdapter);
+
     }
     @Override
     public void onClick(View view) {
@@ -95,12 +95,14 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
         {
             case R.id.btn_search:
                 String name=et_search.getText().toString();
-                if(name==null)
+
+                if(name==null||name.length()<=0)
                 {
                     Toast.makeText(context,"请输入查询内容",Toast.LENGTH_SHORT).show();
                     return;
                 }
                 else{
+                    name=name.replace(" ","+");
                     String searchFunc=spinn_func.getSelectedItem().toString();
                     Intent intent=new Intent(activity, SearchResultActivity.class);
                     intent.putExtra("书名",name);

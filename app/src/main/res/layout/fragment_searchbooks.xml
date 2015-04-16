@@ -1,64 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/searchBookPage"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bg"
-    android:orientation="vertical">
+    android:background="@color/bg">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <Spinner
-            android:id="@+id/spi_searchType"
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <Spinner
+                android:id="@+id/spi_searchType"
+                style="@style/spinner_style"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp" />
+
+            <EditText
+                android:id="@+id/et_search"
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_toEndOf="@+id/spi_searchType"
+                android:layout_toLeftOf="@+id/btn_search"
+                android:layout_toRightOf="@+id/spi_searchType"
+                android:layout_toStartOf="@+id/btn_search"
+                android:textColor="#000000" />
+
+            <ImageView
+                android:id="@+id/btn_search"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignBottom="@+id/et_search"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/search_book" />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_hot"
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
-            style="@style/spinner_style"
-            />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/marge_top"
+            android:clickable="true"
+            android:gravity="center"
+            android:padding="@dimen/activity_horizontal_margin"
+            android:text="@string/hot"
+            android:textColor="@color/black"
+            android:textSize="@dimen/text_size_large" />
+    </LinearLayout>
 
-        <EditText
-            android:id="@+id/et_search"
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:layout_toEndOf="@+id/spi_searchType"
-            android:layout_toLeftOf="@+id/btn_search"
-            android:layout_toRightOf="@+id/spi_searchType"
-            android:layout_toStartOf="@+id/btn_search"
-            android:textColor="#000000" />
-        <ImageView
-            android:id="@+id/btn_search"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/search_book" />
-    </RelativeLayout>
-
-
-    <ProgressBar
-        android:id="@+id/pb_loading"
-        style="@style/progressBar"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:gravity="center"
-        android:layout_gravity="center_vertical"
-        android:visibility="invisible" />
-
-    <TextView
-        android:layout_marginTop="@dimen/marge_top"
-        android:padding="@dimen/activity_horizontal_margin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:id="@+id/tv_hot"
-        android:text="@string/hot"
-        android:clickable="true"
-        android:textSize="@dimen/text_size_large"
-        android:textColor="#000000"
-        />
-
-
-</LinearLayout>
+        android:layout_height="match_parent"
+        android:src="@drawable/search_bg" />
+</FrameLayout>

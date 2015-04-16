@@ -23,7 +23,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import org.apache.http.HttpEntity;
@@ -47,6 +46,7 @@ import java.util.List;
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.util.CheckNetMethod;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 
 
 import static edu.sdu.wh.ibook.R.*;
@@ -58,8 +58,8 @@ public class LoginActivity extends Activity {
     private EditText et_user, et_password, et_captcha;
     private ImageView iv_captcha;
     private String userNumber, password,captcha;
-    private ProgressBar pb_login;
     private Handler handler;
+    private LoadingDialog getCaptcha,login;
     private SharedPreferences sp;
 
     private DefaultHttpClient client;
@@ -109,19 +109,19 @@ public class LoginActivity extends Activity {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 0:
-                        pb_login.setVisibility(View.GONE);
+                        getCaptcha.dismiss();
                         iv_captcha.setImageDrawable((Drawable) msg.obj);
                         break;
                     case 1:
-                        pb_login.setVisibility(View.GONE);
+                        getCaptcha.dismiss();
                         Toast.makeText(getApplicationContext(), "URL验证失败！", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        pb_login.setVisibility(View.GONE);
+                        login.dismiss();
                         Toast.makeText(getApplicationContext(), "登录成功！", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
-                        intent.putExtra("UserNumber",userNumber);
                         intent.setClass(LoginActivity.this, MainActivity.class);
+                        intent.putExtra("用户名",userNumber);
                         startActivity(intent);
                         finish();
                         SharedPreferences.Editor editor = sp.edit();
@@ -130,11 +130,10 @@ public class LoginActivity extends Activity {
                         editor.apply();
                         break;
                     case 3:
-                        pb_login.setVisibility(View.GONE);
+                        login.dismiss();
                         Toast.makeText(getApplicationContext(), "登陆失败！", Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
-                        pb_login.setVisibility(View.GONE);
                         Toast.makeText(getApplicationContext(), "连接超时,请重新登录！", Toast.LENGTH_SHORT).show();
                         break;
                     case 5:
@@ -154,12 +153,14 @@ public class LoginActivity extends Activity {
         et_password = (EditText) findViewById(id.passwordText);
         et_captcha = (EditText) findViewById(id.et_captcha);
         et_captcha.setInputType(EditorInfo.TYPE_CLASS_PHONE);
-        pb_login = (ProgressBar) findViewById(id.pb_login);
 
-        pb_login.setVisibility(View.GONE);
 
         iv_captcha= (ImageView) findViewById(R.id.iv_captcha);
         btnLogin = (Button) findViewById(R.id.btn_login);
+
+        getCaptcha =new LoadingDialog(LoginActivity.this,"加载中.....");
+
+        login=new LoadingDialog(LoginActivity.this,"登录中.....");
     }
 
 
@@ -194,10 +195,9 @@ public class LoginActivity extends Activity {
             captcha= et_captcha.getText().toString();
 
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-//            imm.showSoftInput(et_captcha, InputMethodManager.SHOW_FORCED);
             imm.hideSoftInputFromWindow(et_captcha.getWindowToken(), 0);
 
-            pb_login.setVisibility(View.VISIBLE);
+            login.show();
 
             Thread loginThread = new Thread(new LoginThread());
             loginThread.start();
@@ -273,7 +273,7 @@ public class LoginActivity extends Activity {
             userNumber = et_user.getText().toString();
             password = et_password.getText().toString();
 
-            pb_login.setVisibility(View.VISIBLE);
+            getCaptcha.show();
 
             Thread captchaThread = new Thread(new CaptchaThread());
             captchaThread.start();

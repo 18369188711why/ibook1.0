@@ -2,4 +2,8 @@
 <resources>
     <color name="red">#ffb21c00</color>
     <color name="black">#000000</color>
+    <color name="bg">#b9e1da</color>
+    <color name="bar_bg">#ffa2cb84</color>
+    <color name="bg_text">#c88589d6</color>
+    <color name="nn">#19000000</color>
 </resources>

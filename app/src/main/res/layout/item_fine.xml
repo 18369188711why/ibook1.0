@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/lv_bg">
     <LinearLayout
         android:layout_marginTop="@dimen/marge_top"
         android:layout_marginLeft="@dimen/marge_left"
@@ -23,7 +24,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/text_size_middle"
-            android:id="@+id/tv_bookHisBarcode"
+            android:id="@+id/tv_fineBarcode"
             android:textColor="@color/text"/>
     </LinearLayout>
 
@@ -39,15 +40,14 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/author"
-            android:id="@+id/tv_bookInfo1"
+            android:text="@string/code"
             android:textColor="@color/text"
             android:textSize="@dimen/text_size_middle"
             />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_bookHisAuthor"
+            android:id="@+id/tv_fineCode"
             android:textSize="@dimen/text_size_middle"
             android:textColor="@color/text"/>
     </LinearLayout>
@@ -66,18 +66,40 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/place"
+            android:text="@string/name"
             android:textSize="@dimen/text_size_middle"
-            android:id="@+id/tv_bookInfo2"
             android:textColor="@color/text"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_bookHisPlace"
+            android:id="@+id/tv_fineName"
             android:textColor="@color/text"
             android:textSize="@dimen/text_size_middle"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:text="@string/charge"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_fineCharge"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+    </LinearLayout>
     <LinearLayout
         android:layout_marginTop="@dimen/marge_top"
         android:layout_marginLeft="@dimen/marge_left"
@@ -96,7 +118,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_bookHisBorrDate"
+            android:id="@+id/tv_fineBorrDate"
             android:textColor="@color/text"
             android:textSize="@dimen/text_size_middle"
             />
@@ -114,12 +136,104 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/text"
-            android:text="@string/returnDate"
+            android:text="@string/shouldReturnDate"
             android:textSize="@dimen/text_size_middle"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/tv_bookHisRetuDate"
+            android:id="@+id/tv_fineShouldRetuDate"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:text="@string/place"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_finePlace"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:text="@string/fine"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_fine"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:text="@string/finePay"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_finePay"
+            android:textColor="@color/text"
+            android:textSize="@dimen/text_size_middle"
+            />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_marginTop="@dimen/marge_top"
+        android:layout_marginLeft="@dimen/marge_left"
+        android:layout_marginStart="@dimen/marge_left"
+        android:layout_marginRight="@dimen/marge_right"
+        android:layout_marginEnd="@dimen/marge_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/text"
+            android:text="状态:"
+            android:textSize="@dimen/text_size_middle"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/tv_fineStatus"
             android:textColor="@color/text"
             android:textSize="@dimen/text_size_middle"
             />

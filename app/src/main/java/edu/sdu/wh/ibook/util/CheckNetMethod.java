@@ -12,9 +12,6 @@ import android.content.Intent;
 public class CheckNetMethod {
     public static void setNetworkMethod(final Context context){
         //提示对话框
-
-        System.out.println("1 __________________________________-------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>");
-
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         builder.setTitle("网络设置提示").setMessage("网络连接不可用,是否进行设置?")
                 .setPositiveButton("设置", new DialogInterface.OnClickListener() {
@@ -41,7 +38,5 @@ public class CheckNetMethod {
                         dialog.dismiss();
                     }
                 }).show();
-
-        System.out.println("Wrong __________________________________-------------------------------------------------->>>>>>>>>>>>>>>>>>>>>>>");
     }
 }

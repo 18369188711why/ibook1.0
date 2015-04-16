@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/tv_bookinfo_status">
+    android:background="@color/lv_bg">
     <TextView
         android:layout_marginTop="@dimen/marge_top"
         android:layout_marginLeft="@dimen/marge_left"

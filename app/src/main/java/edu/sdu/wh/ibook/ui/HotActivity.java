@@ -10,13 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -27,6 +23,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,16 +35,18 @@ import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.HotAdapter;
 import edu.sdu.wh.ibook.po.HotBookInfo;
-import edu.sdu.wh.ibook.service.BookInfoHotJsoupHtml;
+import edu.sdu.wh.ibook.util.ToDocument;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 
 public class HotActivity extends Activity implements AdapterView.OnItemClickListener, AdapterView.OnItemSelectedListener {
 
     private static String url="http://202.194.40.71:8080/top/top_lend.php";
     private Spinner spinn_hot;
     private ListView lv_hot;
-    private ProgressBar progressBar;
+    private LoadingDialog loading;
+
     private HotAdapter adapter;
-    private List<HotBookInfo> bookInfos;
+    private List<HotBookInfo> hotBookInfos;
     private Handler handler;
     private String parmas;
     private static int URL_WRONG=0,OK=1;
@@ -82,14 +81,13 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        requestWindowFeature(Window.FEATURE_NO_TITLE);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_hot);
 
         initView();
         initData();
         initEvent();
+        loading.show();
         Thread thread=new Thread(new LoadThread());
         thread.start();
     }
@@ -106,12 +104,12 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
-                        progressBar.setVisibility(View.INVISIBLE);
+                        loading.dismiss();
                         Toast.makeText(getApplicationContext(),"加载失败",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        progressBar.setVisibility(View.INVISIBLE);
-                        adapter=new HotAdapter(getApplicationContext(),bookInfos);
+                        loading.dismiss();
+                        adapter=new HotAdapter(getApplicationContext(),hotBookInfos);
                         lv_hot.setAdapter(adapter);
                         break;
                 }
@@ -148,35 +146,16 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
         spinn_hot.setAdapter(rightAdapter);
 
         lv_hot= (ListView) findViewById(R.id.lv_hot);
-        progressBar= (ProgressBar) findViewById(R.id.pb_loading);
-        progressBar.setVisibility(View.INVISIBLE);
 
+        loading=new LoadingDialog(this,"Loading....");
     }
 
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_hot, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        progressBar.setVisibility(View.VISIBLE);
         Intent intent=new Intent(HotActivity.this,BookDetailActivity.class);
-        intent.putExtra("书名",bookInfos.get(i).getName());
-        String link=bookInfos.get(i).getLink().substring(8);
+        intent.putExtra("书名",hotBookInfos.get(i).getName());
+        String link=hotBookInfos.get(i).getLink().substring(8);
         intent.putExtra("链接",URL_BASIC+link);
         this.startActivityForResult(intent,1);
     }
@@ -184,7 +163,7 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
         parmas=typeValue.get(spinn_hot.getSelectedItem().toString());
-        progressBar.setVisibility(View.VISIBLE);
+        loading.show();
         Thread loadThread=new Thread(new LoadThread());
         loadThread.start();
     }
@@ -197,7 +176,6 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
     private class LoadThread implements Runnable {
         @Override
         public void run() {
-            bookInfos=new ArrayList<HotBookInfo>();
             DefaultHttpClient client= IBookApp.getHttpClient();
             HttpGet get=new HttpGet(url+parmas);
             try {
@@ -206,13 +184,7 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
                 if(flag)
                 {
                     String html= EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                    BookInfoHotJsoupHtml jsoupHtml=new BookInfoHotJsoupHtml(html);
-                    List<HotBookInfo> b=jsoupHtml.getHotBookInfos();
-
-                    for(int i=0;i<b.size();i++)
-                    {
-                        bookInfos.add(b.get(i));
-                    }
+                    parseHtml(html);
                     Message msg=new Message();
                     msg.what=OK;
                     handler.sendMessage(msg);
@@ -226,6 +198,27 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
                 e.printStackTrace();
             }
 
+        }
+    }
+    public void parseHtml(String html) {
+        hotBookInfos=new ArrayList<HotBookInfo>();
+        Elements contents=ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
+                select("div[id=\"container\"]").
+                select("table[class=\"table_line\"]").
+                select("tbody").
+                select("tr");
+        for (int i = 1; i <contents.size() ; i++) {
+            HotBookInfo hot=new HotBookInfo();
+            Elements book=contents.get(i).select("td");
+            hot.setName(book.get(0).text()+"、"+book.get(1).text());
+            hot.setLink(book.get(1).select("a").first().attr("href"));
+            hot.setAuthor(book.get(2).text());
+            hot.setPublisher(book.get(3).text());
+            hot.setCode(book.get(4).text());
+            hot.setPlaceInfo(book.get(5).text());
+            hot.setBorrowNum(book.get(6).text());
+            hot.setBorrowRate(book.get(7).text());
+            hotBookInfos.add(hot);
         }
     }
 }

@@ -20,11 +20,13 @@ import edu.sdu.wh.ibook.R;
 
 
 /**
- * Created by Wang Hongyu on 2015/1/20.
+ *
  */
 public class BottomBars extends View{
 
-    private int mColor=0xA56EC052;
+    //文本和图标未点击的颜色
+    private int pressedColor =0xffd6d1d4;
+
     private Bitmap miconBitmap;
     private String mText="通";
     private int mTextSize= (int)TypedValue.applyDimension(
@@ -57,10 +59,11 @@ public class BottomBars extends View{
             switch (attr){
                 case R.styleable.BottomBars_icon:
                     BitmapDrawable drawable= (BitmapDrawable) a.getDrawable(attr);
+                    assert drawable != null;
                     miconBitmap=drawable.getBitmap();
                     break;
                 case R.styleable.BottomBars_color:
-                    mColor=a.getColor(attr,0xA56EC052);
+                    pressedColor =a.getColor(attr,0xc88589d6);
                     break;
                 case R.styleable.BottomBars_text:
                     mText=a.getString(attr);
@@ -75,7 +78,8 @@ public class BottomBars extends View{
         mTextBound=new Rect();
         mTextPaint=new Paint();
         mTextPaint.setTextSize(mTextSize);
-        mTextPaint.setColor(0xc89a9a9a);
+        //背景色
+        mTextPaint.setColor(0xffa2cb84);
 
         mTextPaint.getTextBounds(mText,0,mText.length(),mTextBound);
     }
@@ -109,7 +113,7 @@ public class BottomBars extends View{
     }
 
     private void drawTargetText(Canvas canvas, int alpha) {
-        mTextPaint.setColor(mColor);
+        mTextPaint.setColor(pressedColor);
         mTextPaint.setAlpha(alpha);
         int x=getMeasuredWidth()/2-mTextBound.width()/2;
         int y=mIconRect.bottom+mTextBound.height();
@@ -117,7 +121,8 @@ public class BottomBars extends View{
     }
 
     private void drawSourceText(Canvas canvas, int alpha) {
-        mTextPaint.setColor(0xff333333);
+        //文字初始颜色
+        mTextPaint.setColor(0x19000000);
         mTextPaint.setAlpha(255-alpha);
         int x=getMeasuredWidth()/2-mTextBound.width()/2;
         int y=mIconRect.bottom+mTextBound.height();
@@ -131,7 +136,7 @@ public class BottomBars extends View{
                 Bitmap.Config.ARGB_8888);
         mcanvas=new Canvas(mBitmap);
         mPaint=new Paint();
-        mPaint.setColor(mColor);
+        mPaint.setColor(pressedColor);
         mPaint.setAntiAlias(true);
         mPaint.setDither(true);
         mPaint.setAlpha(alpha);

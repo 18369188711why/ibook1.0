@@ -1,29 +1,26 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/borrowBookNowPage"
     android:background="@color/bg"
     android:orientation="vertical">
 
-
-    <edu.sdu.wh.ibook.view.LoadListView
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:id="@+id/lv_borrowBooksNow"
-        android:divider="@color/light_white"
-        android:dividerHeight="@dimen/divider_height"
-        />
-    <ProgressBar
-        android:layout_marginTop="@dimen/activity_vertical_margin"
-        android:id="@+id/pb_loading"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:layout_gravity="center"
-        android:visibility="invisible"
-        style="@style/progressBar"
-        />
+        android:layout_height="wrap_content">
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:id="@+id/lv_borrowBooksNow"
+            android:divider="@color/bg"
+            android:dividerHeight="@dimen/divider_height"
+            />
+        <ImageView
+            android:id="@+id/empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/now_null"/>
+    </FrameLayout>
 
 </LinearLayout>

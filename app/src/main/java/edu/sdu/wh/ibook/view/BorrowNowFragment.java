@@ -12,17 +12,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
-import android.widget.ProgressBar;
-import android.widget.Toast;
+import android.widget.ListView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
+import org.jsoup.select.Elements;
 
 import java.io.IOException;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,27 +30,27 @@ import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.NowAdapter;
 import edu.sdu.wh.ibook.po.NowBookInfo;
 import edu.sdu.wh.ibook.ui.BookDetailActivity;
-import edu.sdu.wh.ibook.service.BookInfoNowJsoupHtml;
+import edu.sdu.wh.ibook.util.ToDocument;
 
 /**
  *
  */
-public class BorrowNowFragment extends Fragment implements LoadListView.LoadListener, AdapterView.OnItemClickListener {
+public class BorrowNowFragment extends Fragment implements  AdapterView.OnItemClickListener {
 
     private View v;
     private BaseAdapter adapter;
     private Activity activity;
     private List<NowBookInfo> bookInfos;
 
-    private LoadListView lv;
-    private ProgressBar pb_loading;
+    private ListView lv;
 
     private Handler handler;
     private Context context;
+    private LoadingDialog dialog;
 
     private static String URL_LIST="http://202.194.40.71:8080/reader/book_lst.php";
     private static String URL_BASIC="http://202.194.40.71:8080/opac/";
-    private static int URL_WRONG=0,OK=1;
+    private static int NOW_NULL =0,OK=1;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,13 +61,12 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
     }
 
     private void initEvent() {
-        lv.setLoadListener(this);
         lv.setOnItemClickListener(this);
     }
 
     //更新数据进行，应该写线程
     public void initData() {
-        pb_loading.setVisibility(View.VISIBLE);
+        dialog.show();
         Thread loadThread = new Thread(new LoadThread());
         loadThread.start();
     }
@@ -79,32 +77,29 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
         LayoutInflater inflater = LayoutInflater.from(context);
 
         v = inflater.inflate(R.layout.fragment_borrownow, null);
-        lv = (LoadListView) v.findViewById(R.id.lv_borrowBooksNow);
+        lv = (ListView) v.findViewById(R.id.lv_borrowBooksNow);
+
+        lv.setEmptyView(v.findViewById(R.id.empty_view));
 
         bookInfos=new ArrayList<NowBookInfo>();
         adapter=new NowAdapter(context,bookInfos);
         lv.setAdapter(adapter);
-        pb_loading= (ProgressBar) v.findViewById(R.id.pb_loading);
+
+        dialog=new LoadingDialog(activity,"Loading.....");
 
         handler = new Handler() {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 0:
-                        pb_loading.setVisibility(View.INVISIBLE);
-                        Toast.makeText(context, "当前未借阅图书", Toast.LENGTH_SHORT).show();
+                        dialog.dismiss();
                         break;
                     case 1:
-                        pb_loading.setVisibility(View.INVISIBLE);
-                        onLoad(lv);
+                        dialog.dismiss();
+                        adapter.notifyDataSetChanged();
                         break;
                 }
             }
         };
-    }
-    @Override
-    public void onLoad(View view) {
-        adapter.notifyDataSetChanged();
-        lv.loadComplete();
     }
 
     @Override
@@ -121,7 +116,6 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
         boolean flag;
         @Override
         public void run() {
-            if(bookInfos.size()==0){
                 HttpClient client=IBookApp.getHttpClient();
                 HttpGet get=new HttpGet(URL_LIST);
                 try {
@@ -130,40 +124,59 @@ public class BorrowNowFragment extends Fragment implements LoadListView.LoadList
                     if(!flag)
                     {
                         Message msg=new Message();
-                        msg.what=URL_WRONG;
+                        msg.what= NOW_NULL;
+                        dialog.setProgress(100);
                         handler.sendMessage(msg);
                     }
                     else{
                         String html=EntityUtils.toString(response.getEntity(), HTTP.UTF_8);
-                        BookInfoNowJsoupHtml b=new BookInfoNowJsoupHtml(html);
-
-                        for(int i=0;i<b.getBookInfos().size();i++)
-                        {
-                            bookInfos.add(b.getBookInfos().get(i));
-                        }
-
-                        if(bookInfos.size()==1)
-                        {
-                            Message msg=new Message();
-                            msg.what= URL_WRONG;
-                            handler.sendMessage(msg);
-                        }
-                        else {
-                            Message msg=new Message();
-                            msg.what=OK;
-                            handler.sendMessage(msg);
-                        }
+                        parseHtml(html);
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+        }
+
+
+        private void parseHtml(String html){
+            Elements contents= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
+                    select("div[id=\"container\"]").
+                    select("div[id=\"mylib_content\"]").
+                    select("table").
+                    select("tbody").
+                    select("tr");
+
+            if(contents.size()==1)
+            {
+                Message msg=new Message();
+                msg.what= NOW_NULL;
+                dialog.setProgress(100);
+                handler.sendMessage(msg);
+            }else if(contents.size()!=(bookInfos.size()+1)||bookInfos.isEmpty()){
+                for(int i=1;i<contents.size();i++)
+                {
+                    NowBookInfo bookInfo = new NowBookInfo();
+                    Elements book=contents.get(i).select("td");
+                    bookInfo.setBarcode(book.get(0).text().trim());
+                    bookInfo.setName_author(book.get(1).text().trim());
+                    bookInfo.setLink(book.get(1).select("a").first().attr("href"));
+                    bookInfo.setBorrowDate(book.get(2).text().trim());
+                    bookInfo.setReturnDate(book.get(3).text().trim());
+                    bookInfo.setRenewNum(book.get(4).text().trim());
+                    bookInfo.setPlace(book.get(5).text().trim());
+                    bookInfos.add(bookInfo);
+                }
+                Message msg=new Message();
+                msg.what=OK;
+                dialog.setProgress(100);
+                handler.sendMessage(msg);
             }
             else {
                 Message msg=new Message();
                 msg.what=OK;
+                dialog.setProgress(100);
                 handler.sendMessage(msg);
             }
-
         }
     }
 }

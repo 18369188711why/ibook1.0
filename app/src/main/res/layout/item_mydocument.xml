@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/listviewdemo"
-    android:background="@drawable/tv_bookinfo_status">
+    android:background="@color/lv_bg">
 
         <TextView
             android:layout_marginLeft="@dimen/marge_left"

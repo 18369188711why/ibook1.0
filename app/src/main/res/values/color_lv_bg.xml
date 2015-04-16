@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="lv_bg">#428b8b80</color>
+    <color name="lv_bg">#c5d0db</color>
+    <color name="mm">#c8c229d6</color>
 </resources>

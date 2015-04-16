@@ -3,7 +3,6 @@ package edu.sdu.wh.ibook.ui;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
@@ -14,7 +13,7 @@ import edu.sdu.wh.ibook.R;
 
 
 /**
- *
+ *这个app是实现山大威海图书馆的我的图书馆的登录，实现的功能有搜索，热门推荐，
  */
 public class SplashActivity extends Activity {
     private final int SPLASH_DELAY_LENGTH= 4000;
