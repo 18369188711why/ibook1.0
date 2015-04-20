@@ -105,18 +105,18 @@ public class SearchResultActivity extends Activity implements AdapterView.OnItem
                 switch (msg.what)
                 {
                     case 0:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"搜索错误",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"成功",Toast.LENGTH_SHORT).show();
                         SearchResultAdapter adapter=new SearchResultAdapter(getApplicationContext(),
                                 bookInfos);
                         lv_bookList.setAdapter(adapter);
                         break;
                     case 2:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"搜索结果为空",Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -177,7 +177,6 @@ public class SearchResultActivity extends Activity implements AdapterView.OnItem
     }
 
     public void parseHtml(String html) {
-        bookInfos=new ArrayList<BookInfo>();
         Elements contents= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
                 select("div[id=\"container\"]").select("div[id=\"content\"]");
 

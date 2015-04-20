@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import edu.sdu.wh.ibook.IBookApp;
 import edu.sdu.wh.ibook.R;
@@ -17,7 +16,7 @@ import edu.sdu.wh.ibook.R;
  */
 public class UserActivity extends Activity {
     private TextView  tv_userName,tv_userNum,tv_msg;
-    private View v_search_his,v_asord,v_preg,v_fine;
+    private View v_search_his,v_asord,v_preg,v_about_us;
 
     //搜索历史
     private static String histUrl="http://202.194.40.71:8080/reader/search_hist.php";
@@ -25,8 +24,6 @@ public class UserActivity extends Activity {
     private static String asordUrl="http://202.194.40.71:8080/reader/asord_lst.php";
     //预约信息
     private static String pregUrl="http://202.194.40.71:8080/reader/preg.php";
-    //违章缴费
-    private static String fineUrl="http://202.194.40.71:8080/reader/fine_pec.php";
 
 
     @Override
@@ -69,11 +66,11 @@ public class UserActivity extends Activity {
             }
         });
 
-        v_fine.setOnClickListener(new View.OnClickListener() {
+        v_about_us.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(UserActivity.this,FineActivity.class);
-                intent.putExtra("链接",fineUrl);
+                Intent intent=new Intent(UserActivity.this,AboutUsActivity.class);
+                intent.putExtra("链接",pregUrl);
                 UserActivity.this.startActivityForResult(intent,0);
             }
         });
@@ -98,7 +95,7 @@ public class UserActivity extends Activity {
         v_search_his=findViewById(R.id.v_search_his);
         v_asord=findViewById(R.id.v_asord);
         v_preg=findViewById(R.id.v_preg);
-        v_fine=findViewById(R.id.v_fine);
+        v_about_us=findViewById(R.id.v_about_us);
     }
 
 
@@ -106,6 +103,8 @@ public class UserActivity extends Activity {
     public void onBackPressed() {
         Intent intent=new Intent(UserActivity.this,MainActivity.class);
         UserActivity.this.startActivity(intent);
+        this.finish();
         super.onBackPressed();
     }
+
 }

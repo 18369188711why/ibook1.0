@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -102,6 +103,10 @@ public class SearchFragment extends Fragment implements View.OnClickListener {
                     return;
                 }
                 else{
+
+                    InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(et_search.getWindowToken(), 0);
+
                     name=name.replace(" ","+");
                     String searchFunc=spinn_func.getSelectedItem().toString();
                     Intent intent=new Intent(activity, SearchResultActivity.class);

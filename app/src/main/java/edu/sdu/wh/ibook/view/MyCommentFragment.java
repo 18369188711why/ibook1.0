@@ -97,15 +97,15 @@ public class MyCommentFragment extends Fragment {
 
                 switch (msg.what) {
                     case 0:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(context, "数据加载失败！", Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        loading.dismiss();
+                        loading.hide();
                         adapter.notifyDataSetChanged();
                         break;
                     case 2:
-                        loading.dismiss();
+                        loading.hide();
                         break;
                 }
             }
@@ -149,6 +149,7 @@ public class MyCommentFragment extends Fragment {
             handler.sendMessage(msg);
         } else if (attitudes.size() != myComments.size()||myComments.isEmpty()  ) {
 
+            myComments.clear();
             for (int i = 0; i < attitudes.size(); i++) {
                 Element element = attitudes.get(i);
                 Elements documentContent = element.select("div").select("p");

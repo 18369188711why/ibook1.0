@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -40,9 +41,11 @@ public class BorrowNowFragment extends Fragment implements  AdapterView.OnItemCl
     private View v;
     private BaseAdapter adapter;
     private Activity activity;
+    private String number;
     private List<NowBookInfo> bookInfos;
 
     private ListView lv;
+    private TextView tv_number;
 
     private Handler handler;
     private Context context;
@@ -81,6 +84,8 @@ public class BorrowNowFragment extends Fragment implements  AdapterView.OnItemCl
 
         lv.setEmptyView(v.findViewById(R.id.empty_view));
 
+        tv_number= (TextView) v.findViewById(R.id.tv_number);
+
         bookInfos=new ArrayList<NowBookInfo>();
         adapter=new NowAdapter(context,bookInfos);
         lv.setAdapter(adapter);
@@ -91,10 +96,12 @@ public class BorrowNowFragment extends Fragment implements  AdapterView.OnItemCl
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 0:
-                        dialog.dismiss();
+                        dialog.hide();
+                        tv_number.setText(number);
                         break;
                     case 1:
-                        dialog.dismiss();
+                        dialog.hide();
+                        tv_number.setText(number);
                         adapter.notifyDataSetChanged();
                         break;
                 }
@@ -139,20 +146,27 @@ public class BorrowNowFragment extends Fragment implements  AdapterView.OnItemCl
 
 
         private void parseHtml(String html){
-            Elements contents= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
+            Elements elements= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
                     select("div[id=\"container\"]").
-                    select("div[id=\"mylib_content\"]").
+                    select("div[id=\"mylib_content\"]");
+
+
+            Elements contents = elements.
                     select("table").
                     select("tbody").
                     select("tr");
+
+            Elements elementss=elements.select("p");
+
+            number=elementss.text();
 
             if(contents.size()==1)
             {
                 Message msg=new Message();
                 msg.what= NOW_NULL;
-                dialog.setProgress(100);
                 handler.sendMessage(msg);
             }else if(contents.size()!=(bookInfos.size()+1)||bookInfos.isEmpty()){
+                bookInfos.clear();
                 for(int i=1;i<contents.size();i++)
                 {
                     NowBookInfo bookInfo = new NowBookInfo();
@@ -168,13 +182,11 @@ public class BorrowNowFragment extends Fragment implements  AdapterView.OnItemCl
                 }
                 Message msg=new Message();
                 msg.what=OK;
-                dialog.setProgress(100);
                 handler.sendMessage(msg);
             }
             else {
                 Message msg=new Message();
                 msg.what=OK;
-                dialog.setProgress(100);
                 handler.sendMessage(msg);
             }
         }

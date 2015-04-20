@@ -109,15 +109,15 @@ public class LoginActivity extends Activity {
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 0:
-                        getCaptcha.dismiss();
+                        getCaptcha.hide();
                         iv_captcha.setImageDrawable((Drawable) msg.obj);
                         break;
                     case 1:
-                        getCaptcha.dismiss();
+                        getCaptcha.hide();
                         Toast.makeText(getApplicationContext(), "URL验证失败！", Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
-                        login.dismiss();
+                        login.hide();
                         Toast.makeText(getApplicationContext(), "登录成功！", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent();
                         intent.setClass(LoginActivity.this, MainActivity.class);
@@ -130,7 +130,7 @@ public class LoginActivity extends Activity {
                         editor.apply();
                         break;
                     case 3:
-                        login.dismiss();
+                        login.hide();
                         Toast.makeText(getApplicationContext(), "登陆失败！", Toast.LENGTH_SHORT).show();
                         break;
                     case 4:
@@ -343,5 +343,12 @@ public class LoginActivity extends Activity {
                 }
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        getCaptcha.dismiss();
+        login.dismiss();
+        super.onDestroy();
     }
 }

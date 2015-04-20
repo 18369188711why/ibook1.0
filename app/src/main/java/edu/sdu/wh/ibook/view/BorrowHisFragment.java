@@ -93,15 +93,15 @@ public class BorrowHisFragment extends Fragment implements AdapterView.OnItemCli
             public void handleMessage(Message msg) {
                 switch (msg.what) {
                     case 0:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(context,"加载失败！",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        loading.dismiss();
+                        loading.hide();
                         adapter.notifyDataSetChanged();
                         break;
                     case 2:
-                        loading.dismiss();
+                        loading.hide();
                         break;
                 }
             }
@@ -177,6 +177,7 @@ public class BorrowHisFragment extends Fragment implements AdapterView.OnItemCli
                 msg.what=HIS_NULL;
                 handler.sendMessage(msg);
             }else if(contents.size()!=(bookInfos.size()+1)||bookInfos.isEmpty()){
+                bookInfos.clear();
                 for(int i=1;i<contents.size();i++)
                 {
                     HisBookInfo bookInfo = new HisBookInfo();
@@ -202,6 +203,4 @@ public class BorrowHisFragment extends Fragment implements AdapterView.OnItemCli
             }
         }
     }
-
-
 }

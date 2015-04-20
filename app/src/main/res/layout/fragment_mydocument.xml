@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/myDocumentPage"
     android:background="@color/bg"
     android:orientation="vertical">
-    <FrameLayout
+    <ListView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/lv_myDocument"
-            android:divider="@color/bg"
-            android:dividerHeight="@dimen/divider_height"/>
-        <ImageView
-            android:id="@+id/empty_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/comment_null"/>
+        android:layout_height="match_parent"
+        android:id="@+id/lv_myDocument"
+        android:divider="@color/bg"
+        android:dividerHeight="@dimen/divider_height"/>
+    <ImageView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/comment_null"/>
     </FrameLayout>
-</LinearLayout>

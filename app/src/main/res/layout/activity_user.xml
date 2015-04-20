@@ -53,8 +53,6 @@
         android:layout_height="wrap_content"
         android:src="@drawable/divider_user_info_action"
         />
-
-
     <LinearLayout
         android:paddingTop="@dimen/marge_top"
         android:layout_width="match_parent"
@@ -150,7 +148,7 @@
             android:layout_height="wrap_content"
             android:src="@drawable/divider_user_betw_action"/>
         <LinearLayout
-            android:id="@+id/v_fine"
+            android:id="@+id/v_about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -169,7 +167,7 @@
                 android:layout_marginStart="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_user04"
+                android:text="@string/action_about_us"
                 android:textColor="#000000"
                 android:textStyle="italic"
                 android:textSize="18sp"

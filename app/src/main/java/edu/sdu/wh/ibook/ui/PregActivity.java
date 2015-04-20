@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,11 +23,13 @@ import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.PregAdapter;
 import edu.sdu.wh.ibook.po.Preg;
 import edu.sdu.wh.ibook.util.ToDocument;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 
 public class PregActivity extends Activity {
 
     String link;
     ListView lv_preg;
+    LoadingDialog loading;
     Handler handler;
     List<Preg> pregs;
     PregAdapter adapter;
@@ -42,6 +42,8 @@ public class PregActivity extends Activity {
         setContentView(R.layout.activity_preg);
         link=getIntent().getStringExtra("链接");
         lv_preg= (ListView) findViewById(R.id.lv_preg);
+        loading=new LoadingDialog(this,"Loading....");
+        pregs = new ArrayList<Preg>();
         handler=new Handler(){
             @Override
             public void handleMessage(Message msg) {
@@ -49,18 +51,22 @@ public class PregActivity extends Activity {
                 switch (msg.what)
                 {
                     case 0:
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"连接错误",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"暂时没有预约",Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
+                        loading.hide();
                         adapter=new PregAdapter(getApplicationContext(),pregs);
                         lv_preg.setAdapter(adapter);
                         break;
                 }
             }
         };
+        loading.show();
         Thread thread=new Thread(new LoadThread());
         thread.start();
     }
@@ -88,7 +94,7 @@ public class PregActivity extends Activity {
             }
         }
         private void parseHtml(String html) {
-            pregs = new ArrayList<Preg>();
+
             Elements elements = ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
                     select("div[id=\"container\"]").
                     select("div[id=\"mylib_content\"]").
@@ -118,5 +124,17 @@ public class PregActivity extends Activity {
                 handler.sendMessage(msg);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        loading.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

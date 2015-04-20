@@ -6,8 +6,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -104,11 +102,11 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
                 super.handleMessage(msg);
                 switch (msg.what){
                     case 0:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"加载失败",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        loading.dismiss();
+                        loading.hide();
                         adapter=new HotAdapter(getApplicationContext(),hotBookInfos);
                         lv_hot.setAdapter(adapter);
                         break;
@@ -116,6 +114,8 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
             }
         };
         parmas="";
+
+        hotBookInfos=new ArrayList<HotBookInfo>();
     }
 
     private void initView() {
@@ -201,7 +201,10 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
         }
     }
     public void parseHtml(String html) {
-        hotBookInfos=new ArrayList<HotBookInfo>();
+
+        if(!hotBookInfos.isEmpty()){
+            hotBookInfos.clear();
+        }
         Elements contents=ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
                 select("div[id=\"container\"]").
                 select("table[class=\"table_line\"]").
@@ -220,5 +223,11 @@ public class HotActivity extends Activity implements AdapterView.OnItemClickList
             hot.setBorrowRate(book.get(7).text());
             hotBookInfos.add(hot);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        loading.dismiss();
+        super.onDestroy();
     }
 }

@@ -52,7 +52,8 @@
     <string name="action_user01">检索历史</string>
     <string name="action_user02">荐购历史</string>
     <string name="action_user03">预约信息</string>
-    <string name="action_user04">违章缴费</string>
+    <string name="action_about_us">关于我们</string>
+    <string name="about_us">CopyRight © 2014-2015 ibook All Right Reserved.</string>
     <string name="tab_search">图书搜索</string>
     <string name="tab_borrowNow">当前借阅</string>
     <string name="tab_borrowHis">借阅历史</string>
@@ -101,10 +102,10 @@
     <string name="pregDate">预约(到书日):</string>
     <string name="deadDate">截止日期:</string>
     <string name="getPlace">取书地:</string>
-
     <string name="search_his">检索历史:</string>
     <string name="search_time">检索时间:</string>
     <string name="inputuser">请输入学号</string>
     <string name="inputpassword">请输入密码(初始密码为学号)</string>
+    <string name="title_activity_about_us">AboutUsActivity</string>
 
 </resources>

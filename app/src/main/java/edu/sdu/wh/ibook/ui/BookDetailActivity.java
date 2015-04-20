@@ -84,11 +84,11 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
                 switch (msg.what)
                 {
                     case 0:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"链接错误！",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        loading.dismiss();
+                        loading.hide();
                         tv_bookName_code.setText(bookName_code);
                         detailAdapter=new DetailAdapter(getApplicationContext(),bookDetails);
                         lv_bookDetail.setAdapter(detailAdapter);
@@ -155,5 +155,17 @@ public class BookDetailActivity extends Activity implements AdapterView.OnItemCl
             bookDetail.setStatus(contents.get(4).text());
             bookDetails.add(bookDetail);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        loading.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -25,11 +23,13 @@ import edu.sdu.wh.ibook.R;
 import edu.sdu.wh.ibook.adapter.AsordAdapter;
 import edu.sdu.wh.ibook.po.Asord;
 import edu.sdu.wh.ibook.util.ToDocument;
+import edu.sdu.wh.ibook.view.LoadingDialog;
 
 public class AsordActivity extends Activity {
 
     String link;
     ListView lv_list;
+    LoadingDialog loading;
     List<Asord> asords;
     AsordAdapter adapter;
     Handler handler;
@@ -39,8 +39,10 @@ public class AsordActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_asord);
         link=getIntent().getStringExtra("链接");
-        Toast.makeText(getApplicationContext(), link, Toast.LENGTH_SHORT).show();
         lv_list= (ListView) findViewById(R.id.lv_asord);
+
+        asords=new ArrayList<Asord>();
+        loading=new LoadingDialog(this,"Loading....");
 
         handler=new Handler(){
             @Override
@@ -49,12 +51,15 @@ public class AsordActivity extends Activity {
                 switch (msg.what)
                 {
                     case 0:
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"暂时没有预约",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"链接错误！",Toast.LENGTH_SHORT).show();
                         break;
                     case 2:
+                        loading.hide();
                         adapter=new AsordAdapter(getApplicationContext(),asords);
                         lv_list.setAdapter(adapter);
                         break;
@@ -62,6 +67,7 @@ public class AsordActivity extends Activity {
             }
         };
 
+        loading.show();
         Thread thread=new Thread(new LoadThread());
         thread.start();
     }
@@ -91,7 +97,7 @@ public class AsordActivity extends Activity {
         }
 
         private void parseHtml(String html) {
-            asords=new ArrayList<Asord>();
+
             Elements elements= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
                     select("div[id=\"container\"]").
                     select("div[id=\"mylib_content\"]").
@@ -121,5 +127,17 @@ public class AsordActivity extends Activity {
                 handler.sendMessage(msg);
             }
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        loading.dismiss();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        this.finish();
     }
 }

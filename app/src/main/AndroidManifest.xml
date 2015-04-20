@@ -5,7 +5,6 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-
     <application
         android:name=".IBookApp"
         android:allowBackup="true"
@@ -51,23 +50,22 @@
         </activity>
         <activity
             android:name=".ui.SearchHisActivity"
-            android:theme="@style/UserItemActivity"
-            android:label="@string/title_activity_search_his" >
+            android:label="@string/title_activity_search_his"
+            android:theme="@style/UserItemActivity" >
         </activity>
         <activity
             android:name=".ui.AsordActivity"
-            android:theme="@style/UserItemActivity"
-            android:label="@string/title_activity_asord" >
-        </activity>
-        <activity
-            android:name=".ui.FineActivity"
-            android:theme="@style/UserItemActivity"
-            android:label="@string/title_activity_fine" >
+            android:label="@string/title_activity_asord"
+            android:theme="@style/UserItemActivity" >
         </activity>
         <activity
             android:name=".ui.PregActivity"
-            android:theme="@style/UserItemActivity"
-            android:label="@string/title_activity_preg" >
+            android:label="@string/title_activity_preg"
+            android:theme="@style/UserItemActivity" >
+        </activity>
+        <activity
+            android:name=".ui.AboutUsActivity"
+            android:label="@string/title_activity_about_us" >
         </activity>
     </application>
 

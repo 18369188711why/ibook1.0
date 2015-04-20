@@ -50,6 +50,8 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     private DefaultHttpClient client;
 
     private String name;
+    private User user;
+
 
     private LoadingDialog loading;
 
@@ -103,11 +105,11 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 switch (msg.what)
                 {
                     case 0:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"加载失败",Toast.LENGTH_SHORT).show();
                         break;
                     case 1:
-                        loading.dismiss();
+                        loading.hide();
                         Toast.makeText(getApplicationContext(),"加载数据成功",Toast.LENGTH_SHORT).show();
                         break;
                 }
@@ -130,6 +132,8 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
                 return super.getItemId(position);
             }
         };
+
+        user=new User();
     }
 
     private void initView() {
@@ -262,11 +266,6 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
         super.onBackPressed();
     }
 
-    @Override
-    protected void onDestroy() {
-
-        super.onDestroy();
-    }
 
     private class LoadThread implements Runnable {
         String html;
@@ -301,7 +300,7 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
     }
 
     public void parseHtml(String html) {
-        User user=new User();
+
         Elements elements= ToDocument.getDocument(html).select("div[id=\"mainbox\"]").
                 select("div[id=\"container\"]").
                 select("div[id=\"mylib_content\"]");
@@ -336,4 +335,11 @@ public class MainActivity extends FragmentActivity implements ViewPager.OnPageCh
 
         IBookApp.setUser(user);
     }
+
+    @Override
+    protected void onDestroy() {
+        loading.dismiss();
+        super.onDestroy();
+    }
+
 }

@@ -47,6 +47,6 @@ public class SearchHisAdapter extends BaseAdapter{
         //检索时间
         TextView tv_searchTime= (TextView) v.findViewById(R.id.tv_search_time);
         tv_searchTime.setText(searchHises.get(i).getTime());
-        return null;
+        return v;
     }
 }

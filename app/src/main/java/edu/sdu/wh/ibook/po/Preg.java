@@ -1,7 +1,7 @@
 package edu.sdu.wh.ibook.po;
 
 /**
- *
+ *预约信息
  */
 public class Preg {
     private String code;
